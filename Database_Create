@@ -1,0 +1,10 @@
+CREATE PROCEDURE procedure_name
+  @param1 datatype,
+  @param2 datatype
+AS
+BEGIN
+  -- SQL_statements to be executed
+  SELECT column1, column2
+  FROM table_name
+  WHERE columnN = @paramN;
+END;
