@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Query Editor</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+        body { font-family: 'Space Mono', monospace; }
+        textarea { resize: none; }
+        .results-table th, .results-table td { padding: 6px 12px; text-align: left; border-bottom: 1px solid #334155; }
+    </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen flex flex-col">
+  <header class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+   <h1 data-template-id="page-title" class="canva-text font-bold"></h1><span data-template-id="header-badge" class="canva-tag text-xs px-2 py-1 rounded"></span>
+  </header>
+  <main class="flex-1 flex flex-col lg:flex-row gap-0">
+   <!-- Editor Panel -->
+   <section class="flex-1 flex flex-col border-r border-slate-700">
+    <div class="flex items-center justify-between px-4 py-2 border-b border-slate-700">
+     <span data-template-id="editor-label" class="canva-text text-xs uppercase tracking-wider"></span>
+     <div class="flex gap-2">
+      <button data-template-id="clear-btn" class="canva-button px-3 py-1 text-xs rounded" onclick="clearEditor()"></button> <button data-template-id="run-btn" class="canva-button px-4 py-1 text-xs rounded font-bold flex items-center gap-1" onclick="runQuery()"> <i data-lucide="play" style="width:12px;height:12px"></i> <span>Run</span> </button>
+     </div>
+    </div><textarea id="sql-input" class="flex-1 w-full p-4 bg-transparent text-slate-100 outline-none text-sm leading-relaxed" placeholder="SELECT * FROM users WHERE active = true;" spellcheck="false"></textarea>
+   </section><!-- Results Panel -->
+   <section class="flex-1 flex flex-col min-h-[200px]">
+    <div class="px-4 py-2 border-b border-slate-700">
+     <span data-template-id="results-label" class="canva-text text-xs uppercase tracking-wider"></span>
+    </div>
+    <div id="results" class="flex-1 p-4 overflow-auto text-sm">
+     <p data-template-id="results-placeholder" class="canva-text opacity-50 italic"></p>
+    </div>
+   </section>
+  </main>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+        lucide.createIcons();
+
+        const mockData = {
+            users: [
+                { id: 1, name: 'Alice', email: 'alice@example.com', active: true },
+                { id: 2, name: 'Bob', email: 'bob@example.com', active: false },
+                { id: 3, name: 'Charlie', email: 'charlie@example.com', active: true }
+            ],
+            orders: [
+                { id: 101, user_id: 1, total: 59.99, status: 'shipped' },
+                { id: 102, user_id: 2, total: 124.50, status: 'pending' },
+                { id: 103, user_id: 3, total: 89.00, status: 'delivered' }
+            ]
+        };
+
+        function runQuery() {
+            const sql = document.getElementById('sql-input').value.trim();
+            const results = document.getElementById('results');
+            if (!sql) return;
+
+            // Hide placeholder
+            const ph = results.querySelector('[data-template-id="results-placeholder"]');
+            if (ph) ph.style.display = 'none';
+
+            // Simple parser
+            const match = sql.match(/select\s+(.+?)\s+from\s+(\w+)/i);
+            if (!match) {
+                results.innerHTML = '<p class="text-red-400">⚠ Could not parse query. Try: SELECT * FROM users</p>';
+                return;
+            }
+
+            const cols = match[1].trim();
+            const table = match[2].toLowerCase();
+            const data = mockData[table];
+
+            if (!data) {
+                results.innerHTML = `<p class="text-red-400">⚠ Table "${match[2]}" not found. Available: users, orders</p>`;
+                return;
+            }
+
+            let rows = data;
+            const whereMatch = sql.match(/where\s+(\w+)\s*=\s*(.+?)(?:;|$)/i);
+            if (whereMatch) {
+                const field = whereMatch[1];
+                let val = whereMatch[2].trim().replace(/['"]/g, '');
+                rows = data.filter(r => {
+                    const v = r[field];
+                    if (typeof v === 'boolean') return v === (val === 'true');
+                    if (typeof v === 'number') return v === Number(val);
+                    return String(v) === val;
+                });
+            }
+
+            let keys = Object.keys(data[0]);
+            if (cols !== '*') {
+                keys = cols.split(',').map(c => c.trim());
+            }
+
+            let html = `<p class="text-emerald-400 mb-3">${rows.length} row${rows.length !== 1 ? 's' : ''} returned</p>`;
+            html += '<table class="results-table w-full"><thead><tr>';
+            keys.forEach(k => html += `<th class="text-slate-400 font-bold">${k}</th>`);
+            html += '</tr></thead><tbody>';
+            rows.forEach(r => {
+                html += '<tr>';
+                keys.forEach(k => html += `<td class="text-slate-200">${r[k] !== undefined ? r[k] : 'NULL'}</td>`);
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            results.innerHTML = html;
+        }
+
+        function clearEditor() {
+            document.getElementById('sql-input').value = '';
+            const results = document.getElementById('results');
+            results.innerHTML = '<p data-template-id="results-placeholder" class="canva-text opacity-50 italic">Results will appear here...</p>';
+        }
+
+        document.getElementById('sql-input').addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runQuery();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a01e039879364fb3',t:'MTc3OTgxMTQ0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
