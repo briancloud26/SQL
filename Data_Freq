@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Database Designer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#15201c;
+      --muted:#718078;
+      --paper:#f4f7f2;
+      --panel:#fbfdf9;
+      --line:#dfe7dd;
+      --forest:#183f31;
+      --forest-2:#245744;
+      --mint:#c9f2d8;
+      --mint-2:#e5f8eb;
+      --amber:#d9b86c;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink)}
+    .app-shell{
+      width:100%;
+      min-height:calc(100 * min(var(--vh, 1vh), 1vh));
+      background:
+        radial-gradient(circle at 25% 10%, rgba(214,238,221,.72), transparent 28%),
+        linear-gradient(180deg,#f5f8f3 0%,#eef4ec 100%);
+    }
+    .canvas-grid{
+      background-image:
+        linear-gradient(rgba(45,76,63,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,76,63,.07) 1px, transparent 1px);
+      background-size:28px 28px;
+      background-color:#f8fbf6;
+    }
+    .table-card{box-shadow:0 18px 40px rgba(31,57,45,.10);border:1px solid rgba(30,63,48,.11)}
+    .mono{font-family:'Space Mono',monospace}
+    .scroll-soft::-webkit-scrollbar{height:8px;width:8px}
+    .scroll-soft::-webkit-scrollbar-track{background:transparent}
+    .scroll-soft::-webkit-scrollbar-thumb{background:#cbd7ce;border-radius:999px}
+    .focus-ring:focus-visible{outline:3px solid rgba(80,160,117,.35);outline-offset:2px}
+    .connector{position:absolute;height:2px;background:#5f8f78;transform-origin:left center;z-index:0}
+    .connector::after{content:'';position:absolute;right:-5px;top:-4px;width:10px;height:10px;border-radius:999px;background:#5f8f78}
+    .tab-active{background:#f2faf4;color:#173b2f}
+    .tab-inactive{color:rgba(255,255,255,.58)}
+    .query-control{
+      width:100%;
+      border:1px solid #d9e5dc;
+      background:#fbfdfb;
+      border-radius:12px;
+      padding:.7rem .8rem;
+      font-size:.85rem;
+      color:#24483a;
+    }
+    .query-control:focus{outline:3px solid rgba(80,160,117,.18);border-color:#9ab8a6}
+    @media (max-width:1180px){
+      .workspace-grid{grid-template-columns:220px minmax(540px,1fr) 340px !important}
+    }
+    @media (max-width:980px){
+      .workspace-grid{grid-template-columns:1fr !important}
+      .left-panel,.right-panel{display:none}
+      .main-stage{min-height:760px}
+    }
+    @media (max-width:700px){
+      .sidebar{display:none}
+      .header-actions{width:100%;justify-content:flex-start;margin-top:14px}
+      .top-header{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body data-template-id="__page-root">
+  <div class="app-shell flex w-full">
+   <aside class="sidebar w-[72px] bg-[#173b2f] text-white flex flex-col items-center py-5">
+    <div class="w-10 h-10 rounded-2xl bg-[#d8f5df] text-[#173b2f] flex items-center justify-center font-bold text-xl">
+     D
+    </div>
+    <nav class="mt-10 flex flex-col gap-4" aria-label="Primary"><button class="w-11 h-11 rounded-2xl bg-white/12 flex items-center justify-center text-white focus-ring" aria-label="Designer"><i data-lucide="boxes" class="w-5 h-5"></i></button> <button class="w-11 h-11 rounded-2xl flex items-center justify-center text-white/70 hover:bg-white/10 focus-ring" aria-label="Tables"><i data-lucide="table-2" class="w-5 h-5"></i></button> <button class="w-11 h-11 rounded-2xl flex items-center justify-center text-white/70 hover:bg-white/10 focus-ring" aria-label="Queries"><i data-lucide="terminal-square" class="w-5 h-5"></i></button> <button class="w-11 h-11 rounded-2xl flex items-center justify-center text-white/70 hover:bg-white/10 focus-ring" aria-label="Settings"><i data-lucide="settings-2" class="w-5 h-5"></i></button>
+    </nav>
+    <div class="mt-auto flex flex-col gap-4"><button class="w-11 h-11 rounded-2xl flex items-center justify-center text-white/70 hover:bg-white/10 focus-ring" aria-label="Help"><i data-lucide="circle-help" class="w-5 h-5"></i></button> <button class="w-11 h-11 rounded-2xl bg-[#d8f5df] text-[#173b2f] flex items-center justify-center font-semibold focus-ring" aria-label="Profile">JS</button>
+    </div>
+   </aside>
+   <div class="flex-1 min-w-0 flex flex-col">
+    <header class="px-7 py-5 border-b border-[#dfe8df] bg-white/70 backdrop-blur">
+     <div class="top-header flex items-center justify-between gap-4">
+      <div>
+       <div data-template-id="app-eyebrow" class="canva-text text-[11px] tracking-[0.22em] uppercase text-[#708077] font-semibold"></div>
+       <h1 data-template-id="app-title" class="canva-text mt-1 font-semibold text-[#173b2f]"></h1>
+      </div>
+      <div class="header-actions flex items-center gap-3"><button data-template-id="export-button" id="exportBtn" class="canva-button focus-ring inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#cbd8ce] bg-white text-[#25483a] text-sm font-semibold hover:bg-[#f5faf6]"> <i data-lucide="download" class="w-4 h-4"></i> </button> <button data-template-id="add-table-button" id="addTableBtn" class="canva-button focus-ring inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1e4d3c] text-white text-sm font-semibold hover:bg-[#173f31]"> <i data-lucide="plus" class="w-4 h-4"></i> </button>
+      </div>
+     </div>
+    </header>
+    <main class="flex-1 p-5 md:p-6">
+     <section class="mb-5 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+      <div>
+       <div class="flex items-center gap-2">
+        <h2 data-template-id="project-title" class="canva-text font-semibold text-[#163b2d]"></h2><span data-template-id="status-badge" class="canva-tag px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e0f3e7] text-[#2c6e50]"></span>
+       </div>
+       <p data-template-id="project-subtitle" class="canva-text text-[#738078] mt-1"></p>
+      </div>
+      <div class="flex items-center gap-2 text-sm text-[#718078]">
+       <i data-lucide="database" class="w-4 h-4"></i><span>PostgreSQL schema</span>
+      </div>
+     </section>
+     <section class="workspace-grid grid grid-cols-[240px_minmax(620px,1fr)_380px] gap-5">
+      <aside class="left-panel bg-white/85 border border-[#dfe8df] rounded-[22px] p-4">
+       <div class="mb-5">
+        <h2 data-template-id="toolbox-title" class="canva-text font-semibold text-[#173b2f]"></h2>
+        <p data-template-id="toolbox-subtitle" class="canva-text text-sm text-[#7a877f] mt-1"></p>
+       </div>
+       <div>
+        <h3 data-template-id="section-label-entities" class="canva-text text-[11px] uppercase tracking-[0.18em] text-[#8a978e] font-semibold mb-3"></h3>
+        <div class="space-y-2"><button data-entity="users" data-template-id="entity-users" class="entity-btn canva-button focus-ring w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm font-medium text-[#25483a]"> <span class="w-8 h-8 rounded-lg bg-[#dff3e5] flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></span> </button> <button data-entity="products" data-template-id="entity-products" class="entity-btn canva-button focus-ring w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm font-medium text-[#25483a]"> <span class="w-8 h-8 rounded-lg bg-[#f4eddb] flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></span> </button> <button data-entity="orders" data-template-id="entity-orders" class="entity-btn canva-button focus-ring w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm font-medium text-[#25483a]"> <span class="w-8 h-8 rounded-lg bg-[#e3edf8] flex items-center justify-center"><i data-lucide="receipt-text" class="w-4 h-4"></i></span> </button>
+        </div>
+       </div>
+       <div class="mt-7">
+        <h3 data-template-id="section-label-types" class="canva-text text-[11px] uppercase tracking-[0.18em] text-[#8a978e] font-semibold mb-3"></h3>
+        <div class="flex flex-wrap gap-2"><span data-template-id="type-uuid" class="canva-tag px-2.5 py-1.5 rounded-lg bg-[#edf5ef] text-[#41634f] text-xs font-semibold"></span> <span data-template-id="type-text" class="canva-tag px-2.5 py-1.5 rounded-lg bg-[#edf5ef] text-[#41634f] text-xs font-semibold"></span> <span data-template-id="type-integer" class="canva-tag px-2.5 py-1.5 rounded-lg bg-[#edf5ef] text-[#41634f] text-xs font-semibold"></span> <span data-template-id="type-timestamp" class="canva-tag px-2.5 py-1.5 rounded-lg bg-[#edf5ef] text-[#41634f] text-xs font-semibold"></span> <span data-template-id="type-boolean" class="canva-tag px-2.5 py-1.5 rounded-lg bg-[#edf5ef] text-[#41634f] text-xs font-semibold"></span>
+        </div>
+       </div>
+       <div class="mt-7">
+        <h3 data-template-id="section-label-queries" class="canva-text text-[11px] uppercase tracking-[0.18em] text-[#8a978e] font-semibold mb-3"></h3>
+        <div class="space-y-2"><button class="template-query focus-ring w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm text-[#25483a]" data-query="select"> <i data-lucide="list-filter" class="w-4 h-4 text-[#567d69]"></i><span>Select rows</span> </button> <button class="template-query focus-ring w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm text-[#25483a]" data-query="insert"> <i data-lucide="plus-square" class="w-4 h-4 text-[#567d69]"></i><span>Insert row</span> </button> <button class="template-query focus-ring w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#f7faf6] hover:bg-[#eef6ef] border border-[#e5ede5] text-left text-sm text-[#25483a]" data-query="update"> <i data-lucide="pencil-line" class="w-4 h-4 text-[#567d69]"></i><span>Update data</span> </button>
+        </div>
+       </div>
+      </aside>
+      <section class="main-stage canvas-grid relative overflow-hidden rounded-[24px] border border-[#dbe6dc] min-h-[720px]">
+       <div class="absolute top-5 left-5 z-10">
+        <div data-template-id="canvas-kicker" class="canva-text text-[11px] uppercase tracking-[0.18em] text-[#7e8a83] font-semibold"></div>
+        <h2 data-template-id="canvas-title" class="canva-text font-semibold text-[#173b2f] mt-1"></h2>
+        <p data-template-id="canvas-note" class="canva-text text-sm text-[#7b877f] mt-1"></p>
+       </div>
+       <div id="canvas" class="relative w-full h-full min-h-[720px]">
+        <div class="connector" style="left:335px; top:327px; width:156px;"></div>
+        <div class="connector" style="left:335px; top:470px; width:156px;"></div>
+        <article class="table-card absolute bg-white rounded-2xl overflow-hidden z-10" style="left:78px; top:190px; width:255px;">
+         <div class="px-4 py-3 bg-[#1f4f3e] text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+           <span class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></span>
+           <h3 data-template-id="users-table-title" class="canva-text font-semibold"></h3>
+          </div><button class="text-white/80 hover:text-white focus-ring" aria-label="Table options"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+         </div>
+         <div class="divide-y divide-[#edf1ed]">
+          <div class="px-4 py-3 flex items-center justify-between">
+           <div>
+            <div data-template-id="users-col-id" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+            <div data-template-id="users-type-id" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+           </div><span class="px-2 py-1 rounded-md bg-[#fff3d8] text-[#9a6d17] text-[10px] font-semibold">PK</span>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="users-col-name" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="users-type-name" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="users-col-email" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="users-type-email" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="users-col-created" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="users-type-created" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+         </div>
+        </article>
+        <article class="table-card absolute bg-white rounded-2xl overflow-hidden z-10" style="left:490px; top:250px; width:255px;">
+         <div class="px-4 py-3 bg-[#315f4f] text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+           <span class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center"><i data-lucide="receipt-text" class="w-4 h-4"></i></span>
+           <h3 data-template-id="orders-table-title" class="canva-text font-semibold"></h3>
+          </div><button class="text-white/80 hover:text-white focus-ring" aria-label="Table options"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+         </div>
+         <div class="divide-y divide-[#edf1ed]">
+          <div class="px-4 py-3 flex items-center justify-between">
+           <div>
+            <div data-template-id="orders-col-id" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+            <div data-template-id="orders-type-id" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+           </div><span class="px-2 py-1 rounded-md bg-[#fff3d8] text-[#9a6d17] text-[10px] font-semibold">PK</span>
+          </div>
+          <div class="px-4 py-3 flex items-center justify-between">
+           <div>
+            <div data-template-id="orders-col-user" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+            <div data-template-id="orders-type-user" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+           </div><span class="px-2 py-1 rounded-md bg-[#e8f0fb] text-[#4b6897] text-[10px] font-semibold">FK</span>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="orders-col-total" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="orders-type-total" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="orders-col-created" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="orders-type-created" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+         </div>
+        </article>
+        <article class="table-card absolute bg-white rounded-2xl overflow-hidden z-10" style="left:78px; top:435px; width:255px;">
+         <div class="px-4 py-3 bg-[#567764] text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+           <span class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></span>
+           <h3 data-template-id="products-table-title" class="canva-text font-semibold"></h3>
+          </div><button class="text-white/80 hover:text-white focus-ring" aria-label="Table options"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+         </div>
+         <div class="divide-y divide-[#edf1ed]">
+          <div class="px-4 py-3 flex items-center justify-between">
+           <div>
+            <div data-template-id="products-col-id" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+            <div data-template-id="products-type-id" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+           </div><span class="px-2 py-1 rounded-md bg-[#fff3d8] text-[#9a6d17] text-[10px] font-semibold">PK</span>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="products-col-name" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="products-type-name" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+          <div class="px-4 py-3">
+           <div data-template-id="products-col-price" class="canva-text text-sm font-semibold text-[#24483a]"></div>
+           <div data-template-id="products-type-price" class="canva-text text-[11px] text-[#879189] mt-0.5"></div>
+          </div>
+         </div>
+        </article>
+        <div class="absolute left-5 right-5 bottom-5 grid grid-cols-3 gap-3 z-20">
+         <div class="bg-white/92 border border-[#dfe8df] rounded-2xl p-3">
+          <div class="flex items-center gap-2 text-[#426451]">
+           <i data-lucide="list-plus" class="w-4 h-4"></i>
+           <h3 data-template-id="indexes-title" class="canva-text text-sm font-semibold"></h3>
+          </div>
+          <p data-template-id="indexes-copy" class="canva-text text-xs text-[#7a877f] mt-1"></p>
+         </div>
+         <div class="bg-white/92 border border-[#dfe8df] rounded-2xl p-3">
+          <div class="flex items-center gap-2 text-[#426451]">
+           <i data-lucide="shield-check" class="w-4 h-4"></i>
+           <h3 data-template-id="constraints-title" class="canva-text text-sm font-semibold"></h3>
+          </div>
+          <p data-template-id="constraints-copy" class="canva-text text-xs text-[#7a877f] mt-1"></p>
+         </div>
+         <div class="bg-white/92 border border-[#dfe8df] rounded-2xl p-3">
+          <div class="flex items-center gap-2 text-[#426451]">
+           <i data-lucide="activity" class="w-4 h-4"></i>
+           <h3 data-template-id="health-title" class="canva-text text-sm font-semibold"></h3>
+          </div>
+          <p data-template-id="health-copy" class="canva-text text-xs text-[#7a877f] mt-1"></p>
+         </div>
+        </div>
+       </div>
+      </section>
+      <aside class="right-panel bg-[#18392e] text-white rounded-[22px] overflow-hidden">
+       <div class="px-5 py-4 border-b border-white/10">
+        <div class="flex items-start justify-between gap-3">
+         <div>
+          <h2 data-template-id="sql-panel-title" class="canva-text font-semibold text-white"></h2>
+          <p data-template-id="sql-panel-subtitle" class="canva-text text-sm text-white/58 mt-1"></p>
+         </div><button data-template-id="copy-sql-button" id="copySqlBtn" class="canva-button focus-ring inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 text-sm font-medium text-white"><i data-lucide="copy" class="w-4 h-4"></i></button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-4"><button id="schemaTab" class="focus-ring rounded-xl px-3 py-2 text-sm font-semibold tab-active">Schema SQL</button> <button id="queryTab" class="focus-ring rounded-xl px-3 py-2 text-sm font-semibold tab-inactive">Query Builder</button>
+        </div>
+       </div>
+       <div id="schemaPane">
+        <div class="px-5 py-5 h-[530px] overflow-auto scroll-soft">
+         <pre id="sqlPreview" class="mono text-[12px] leading-6 whitespace-pre-wrap text-[#dceee4]"></pre>
+        </div>
+        <div class="px-5 py-4 border-t border-white/10">
+         <p data-template-id="sql-footnote" class="canva-text text-xs text-white/55"></p>
+        </div>
+       </div>
+       <div id="queryPane" class="hidden">
+        <div class="px-5 py-5 h-[530px] overflow-auto scroll-soft bg-[#f8fbf7] text-[#173b2f]">
+         <div class="mb-4">
+          <h3 data-template-id="query-panel-title" class="canva-text font-semibold text-[#173b2f]"></h3>
+          <p data-template-id="query-panel-subtitle" class="canva-text text-sm text-[#718078] mt-1"></p>
+         </div>
+         <div class="space-y-4">
+          <div><label data-template-id="query-type-label" for="queryType" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></label> <select id="queryType" class="query-control"> <option value="select">SELECT</option> <option value="insert">INSERT</option> <option value="update">UPDATE</option> <option value="delete">DELETE</option> </select>
+          </div>
+          <div><label data-template-id="query-table-label" for="queryTable" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></label> <select id="queryTable" class="query-control"> <option value="users">users</option> <option value="orders">orders</option> <option value="products">products</option> </select>
+          </div>
+          <div id="columnsWrap">
+           <div data-template-id="query-columns-label" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></div>
+           <div id="columnChecks" class="grid grid-cols-2 gap-2"></div>
+          </div>
+          <div><label data-template-id="query-filter-label" for="filterValue" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></label>
+           <div class="grid grid-cols-[1fr_78px] gap-2"><select id="filterColumn" class="query-control"></select> <input id="filterValue" class="query-control" type="text" placeholder="value">
+           </div>
+          </div>
+          <div id="sortWrap">
+           <div data-template-id="query-sort-label" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></div>
+           <div class="grid grid-cols-[1fr_88px] gap-2"><select id="sortColumn" class="query-control"></select> <select id="sortDirection" class="query-control"> <option>ASC</option> <option>DESC</option> </select>
+           </div>
+          </div>
+          <div id="limitWrap"><label data-template-id="query-limit-label" for="limitInput" class="canva-text block text-xs uppercase tracking-[0.14em] text-[#7f8d84] font-semibold mb-2"></label> <input id="limitInput" class="query-control" type="number" min="1" value="20">
+          </div>
+          <div class="rounded-2xl bg-[#173b2f] p-4">
+           <div class="flex items-center justify-between gap-3 mb-3"><span class="text-xs uppercase tracking-[0.18em] text-white/55 font-semibold">Generated query</span> <button data-template-id="copy-query-button" id="copyQueryBtn" class="canva-button focus-ring inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-xs font-medium text-white"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+           </div>
+           <pre id="queryPreview" class="mono text-[11px] leading-5 whitespace-pre-wrap text-[#dceee4]"></pre>
+          </div>
+         </div>
+        </div>
+        <div class="px-5 py-4 border-t border-white/10">
+         <p data-template-id="query-footnote" class="canva-text text-xs text-white/55"></p>
+        </div>
+       </div>
+      </aside>
+     </section>
+    </main>
+   </div>
+  </div>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    lucide.createIcons();
+
+    const sqlPreview = document.getElementById('sqlPreview');
+    const queryPreview = document.getElementById('queryPreview');
+    const copySqlBtn = document.getElementById('copySqlBtn');
+    const copyQueryBtn = document.getElementById('copyQueryBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const addTableBtn = document.getElementById('addTableBtn');
+    const schemaTab = document.getElementById('schemaTab');
+    const queryTab = document.getElementById('queryTab');
+    const schemaPane = document.getElementById('schemaPane');
+    const queryPane = document.getElementById('queryPane');
+    const queryType = document.getElementById('queryType');
+    const queryTable = document.getElementById('queryTable');
+    const columnChecks = document.getElementById('columnChecks');
+    const filterColumn = document.getElementById('filterColumn');
+    const filterValue = document.getElementById('filterValue');
+    const sortColumn = document.getElementById('sortColumn');
+    const sortDirection = document.getElementById('sortDirection');
+    const limitInput = document.getElementById('limitInput');
+    const columnsWrap = document.getElementById('columnsWrap');
+    const sortWrap = document.getElementById('sortWrap');
+    const limitWrap = document.getElementById('limitWrap');
+    const canvas = document.getElementById('canvas');
+
+    let customCount = 3;
+    const dynamicTables = [];
+
+    const schema = {
+      users: [
+        ['id','UUID PRIMARY KEY'],
+        ['full_name','TEXT NOT NULL'],
+        ['email','TEXT UNIQUE NOT NULL'],
+        ['created_at','TIMESTAMP DEFAULT NOW()']
+      ],
+      orders: [
+        ['id','UUID PRIMARY KEY'],
+        ['user_id','UUID REFERENCES users(id)'],
+        ['total_amount','INTEGER NOT NULL'],
+        ['created_at','TIMESTAMP DEFAULT NOW()']
+      ],
+      products: [
+        ['id','UUID PRIMARY KEY'],
+        ['name','TEXT NOT NULL'],
+        ['price_cents','INTEGER NOT NULL']
+      ]
+    };
+
+    function makeSql(){
+      const base = Object.entries(schema).map(([table, columns]) => {
+        return `CREATE TABLE ${table} (\\n${columns.map(([n,t]) => `  ${n} ${t}`).join(',\\n')}\\n);`;
+      }).join('\\n\\n');
+      return base + '\\n\\nCREATE INDEX idx_orders_user_id ON orders(user_id);\\nALTER TABLE orders ADD CONSTRAINT orders_total_positive CHECK (total_amount > 0);';
+    }
+
+    function renderSql(){
+      sqlPreview.textContent = makeSql();
+    }
+
+    function setActiveTab(tab){
+      const isSchema = tab === 'schema';
+      schemaPane.classList.toggle('hidden', !isSchema);
+      queryPane.classList.toggle('hidden', isSchema);
+      schemaTab.className = 'focus-ring rounded-xl px-3 py-2 text-sm font-semibold ' + (isSchema ? 'tab-active' : 'tab-inactive');
+      queryTab.className = 'focus-ring rounded-xl px-3 py-2 text-sm font-semibold ' + (!isSchema ? 'tab-active' : 'tab-inactive');
+    }
+
+    function renderColumns(){
+      const cols = schema[queryTable.value].map(([name]) => name);
+      columnChecks.innerHTML = '';
+      filterColumn.innerHTML = '';
+      sortColumn.innerHTML = '';
+      cols.forEach((col, i) => {
+        const id = 'col_' + col;
+        const label = document.createElement('label');
+        label.className = 'flex items-center gap-2 rounded-lg border border-[#dce7df] px-2.5 py-2 text-xs text-[#315442] bg-white';
+        label.innerHTML = `<input type="checkbox" value="${col}" ${i < 3 ? 'checked' : ''} class="accent-[#275642]"> <span>${col}</span>`;
+        columnChecks.appendChild(label);
+
+        const opt1 = document.createElement('option');
+        opt1.value = col; opt1.textContent = col; filterColumn.appendChild(opt1);
+        const opt2 = document.createElement('option');
+        opt2.value = col; opt2.textContent = col; sortColumn.appendChild(opt2);
+      });
+      renderQuery();
+    }
+
+    function selectedColumns(){
+      return [...columnChecks.querySelectorAll('input:checked')].map(i => i.value);
+    }
+
+    function renderQuery(){
+      const type = queryType.value;
+      const table = queryTable.value;
+      const cols = selectedColumns();
+      const filterCol = filterColumn.value || schema[table][0][0];
+      const filterVal = filterValue.value.trim();
+      const where = filterVal ? `\\nWHERE ${filterCol} = '${filterVal.replace(/'/g, "''")}'` : '';
+
+      columnsWrap.classList.toggle('hidden', type === 'delete');
+      sortWrap.classList.toggle('hidden', type !== 'select');
+      limitWrap.classList.toggle('hidden', type !== 'select');
+
+      let query = '';
+      if(type === 'select'){
+        query = `SELECT ${cols.length ? cols.join(', ') : '*'}\\nFROM ${table}${where}`;
+        if(sortColumn.value) query += `\\nORDER BY ${sortColumn.value} ${sortDirection.value}`;
+        if(limitInput.value) query += `\\nLIMIT ${limitInput.value}`;
+        query += ';';
+      } else if(type === 'insert'){
+        const useCols = cols.length ? cols : schema[table].slice(0,2).map(([n]) => n);
+        query = `INSERT INTO ${table} (${useCols.join(', ')})\\nVALUES (${useCols.map(() => "'value'").join(', ')});`;
+      } else if(type === 'update'){
+        const useCols = cols.length ? cols : schema[table].slice(1,2).map(([n]) => n);
+        query = `UPDATE ${table}\\nSET ${useCols.map(c => `${c} = 'value'`).join(', ')}${where || `\\nWHERE ${schema[table][0][0]} = 'id'`};`;
+      } else {
+        query = `DELETE FROM ${table}${where || `\\nWHERE ${schema[table][0][0]} = 'id'`};`;
+      }
+      queryPreview.textContent = query;
+    }
+
+    function copyText(button, text){
+      const original = button.innerHTML;
+      navigator.clipboard.writeText(text).then(() => {
+        button.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i><span>Copied</span>';
+        lucide.createIcons();
+        setTimeout(() => { button.innerHTML = original; lucide.createIcons(); }, 1400);
+      }).catch(() => {
+        button.innerHTML = '<i data-lucide="x" class="w-4 h-4"></i><span>Failed</span>';
+        lucide.createIcons();
+        setTimeout(() => { button.innerHTML = original; lucide.createIcons(); }, 1400);
+      });
+    }
+
+    function createDynamicTable(name){
+      const index = dynamicTables.length;
+      const x = 360 + (index % 2) * 245;
+      const y = 450 + Math.floor(index / 2) * 170;
+      dynamicTables.push(name);
+      const article = document.createElement('article');
+      article.className = 'table-card absolute bg-white rounded-2xl overflow-hidden z-10';
+      article.style.left = x + 'px';
+      article.style.top = y + 'px';
+      article.style.width = '220px';
+      article.innerHTML = `
+        <div class="px-4 py-3 bg-[#3e705f] text-white flex items-center justify-between">
+          <div class="flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center"><i data-lucide="table-2" class="w-4 h-4"></i></span><h3 class="font-semibold text-sm">${name}</h3></div>
+          <button class="delete-table text-white/80 hover:text-white focus-ring" aria-label="Delete ${name}"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+        <div class="divide-y divide-[#edf1ed]">
+          <div class="px-4 py-3 flex items-center justify-between"><div><div class="text-sm font-semibold text-[#24483a]">id</div><div class="text-[11px] text-[#879189] mt-0.5">UUID</div></div><span class="px-2 py-1 rounded-md bg-[#fff3d8] text-[#9a6d17] text-[10px] font-semibold">PK</span></div>
+          <div class="px-4 py-3"><div class="text-sm font-semibold text-[#24483a]">name</div><div class="text-[11px] text-[#879189] mt-0.5">TEXT</div></div>
+          <div class="px-4 py-3"><div class="text-sm font-semibold text-[#24483a]">created_at</div><div class="text-[11px] text-[#879189] mt-0.5">TIMESTAMP</div></div>
+        </div>`;
+      article.querySelector('.delete-table').addEventListener('click', () => article.remove());
+      canvas.appendChild(article);
+      lucide.createIcons();
+    }
+
+    schemaTab.addEventListener('click', () => setActiveTab('schema'));
+    queryTab.addEventListener('click', () => setActiveTab('query'));
+    queryType.addEventListener('change', renderQuery);
+    queryTable.addEventListener('change', renderColumns);
+    filterColumn.addEventListener('change', renderQuery);
+    filterValue.addEventListener('input', renderQuery);
+    sortColumn.addEventListener('change', renderQuery);
+    sortDirection.addEventListener('change', renderQuery);
+    limitInput.addEventListener('input', renderQuery);
+    columnChecks.addEventListener('change', renderQuery);
+
+    copySqlBtn.addEventListener('click', () => copyText(copySqlBtn, sqlPreview.textContent));
+    copyQueryBtn.addEventListener('click', () => copyText(copyQueryBtn, queryPreview.textContent));
+
+    exportBtn.addEventListener('click', () => {
+      const content = makeSql() + '\\n\\n-- Current query\\n' + queryPreview.textContent;
+      const blob = new Blob([content], {type:'text/sql'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'schema-and-query.sql';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    addTableBtn.addEventListener('click', () => {
+      customCount += 1;
+      createDynamicTable(`table_${customCount}`);
+    });
+
+    document.querySelectorAll('.entity-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        customCount += 1;
+        createDynamicTable(`${btn.dataset.entity}_${customCount}`);
+      });
+    });
+
+    document.querySelectorAll('.template-query').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveTab('query');
+        queryType.value = btn.dataset.query;
+        renderQuery();
+      });
+    });
+
+    renderSql();
+    renderColumns();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a05809926c141c6b',t:'MTc4MDQxOTg2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
