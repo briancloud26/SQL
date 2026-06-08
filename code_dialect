@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Portfolio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#183c30;
+      --ink-soft:#355849;
+      --muted:#6f786f;
+      --paper:#f5f1e9;
+      --paper-2:#fbfaf6;
+      --line:#d9d1c5;
+      --sage:#dfe8dd;
+      --sand:#e9dfcf;
+      --deep:#173f31;
+      --cream:#fffdf8;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Libre Franklin',sans-serif;
+      color:var(--ink);
+      min-width:320px;
+    }
+    .display-font{font-family:'Fraunces',serif}
+    .app-shell{
+      width:100%;
+      min-height:calc(100 * min(var(--vh, 1vh), 1vh));
+      background:
+        radial-gradient(circle at 88% 8%, rgba(219,229,217,.75), transparent 22%),
+        radial-gradient(circle at 8% 20%, rgba(255,255,255,.9), transparent 20%),
+        linear-gradient(135deg,#f8f5ef 0%,#eee7dc 100%);
+    }
+    .noise{
+      background-image:radial-gradient(rgba(24,60,48,.035) 1px,transparent 1px);
+      background-size:18px 18px;
+    }
+    .focus-ring:focus-visible{outline:3px solid rgba(39,93,73,.28);outline-offset:3px}
+    .project-card{transition:transform .3s ease, box-shadow .3s ease}
+    .project-card:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(25,49,39,.11)}
+    .project-card img{transition:transform .55s ease}
+    .project-card:hover img{transform:scale(1.035)}
+    .nav-link{position:relative}
+    .nav-link:after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-5px;
+      width:100%;
+      height:1px;
+      background:currentColor;
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .25s ease;
+    }
+    .nav-link:hover:after{transform:scaleX(1);transform-origin:left}
+    .hero-frame:before{
+      content:"";
+      position:absolute;
+      inset:18px -18px -18px 18px;
+      border:1px solid rgba(23,63,49,.22);
+      z-index:0;
+    }
+    @media (max-width: 768px){
+      .hero-frame:before{inset:12px -10px -10px 12px}
+    }
+  </style>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body data-template-id="__page-root" style="background: linear-gradient(135deg, rgb(248, 245, 239), rgb(238, 231, 220));">
+  <div class="app-shell noise w-full">
+   <header class="w-full px-5 sm:px-8 lg:px-10 py-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-6"><a href="#" data-template-id="brand-name" class="canva-text display-font text-xl no-underline" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 22px;">Amelia Hart</a>
+     <nav class="hidden md:flex items-center gap-8 text-sm" aria-label="Primary navigation"><a href="#work" data-template-id="nav-work" class="canva-link nav-link no-underline" style="color: rgb(82, 98, 87); font-weight: 500; font-style: normal; font-size: 16px;">Work</a> <a href="#about" data-template-id="nav-about" class="canva-link nav-link no-underline" style="color: rgb(82, 98, 87); font-weight: 500; font-style: normal; font-size: 16px;">About</a> <a href="#contact" data-template-id="nav-journal" class="canva-link nav-link no-underline" style="color: rgb(82, 98, 87); font-weight: 500; font-style: normal; font-size: 16px;">Contact</a>
+     </nav><a href="#contact" data-template-id="header-contact" class="canva-button focus-ring inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold no-underline" style="background: rgb(23, 63, 49); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Get in touch</a>
+    </div>
+   </header>
+   <main>
+    <section class="w-full px-5 sm:px-8 lg:px-10 pt-10 lg:pt-16 pb-20 lg:pb-28">
+     <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.04fr_.96fr] gap-12 lg:gap-20 items-center">
+      <div>
+       <p data-template-id="hero-kicker" class="canva-text uppercase tracking-[0.2em] text-xs font-semibold mb-5" style="color: rgb(107, 119, 111); font-weight: 700; font-style: normal; font-size: 11px; letter-spacing: 0.16rem;">Independent Designer / Art Director</p>
+       <h1 data-template-id="hero-title" class="canva-text display-font leading-[1.03] max-w-4xl" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 60px; line-height: 1.03;">Thoughtful identities for brands with a point of view.</h1>
+       <p data-template-id="hero-copy" class="canva-text mt-6 max-w-xl leading-8" style="color: rgb(101, 113, 104); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">I partner with founders, studios, and cultural projects to shape visual worlds that feel clear, distinct, and quietly memorable.</p>
+       <div class="flex flex-wrap gap-3 mt-8"><a href="#work" data-template-id="primary-cta" class="canva-button focus-ring inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold no-underline" style="background: rgb(23, 63, 49); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">View selected work</a> <a href="#about" data-template-id="secondary-cta" class="canva-button focus-ring inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold no-underline border" style="background: rgb(248, 244, 236); color: rgb(53, 88, 73); font-weight: 600; font-style: normal; font-size: 16px;">About the studio</a>
+       </div>
+      </div>
+      <div class="relative hero-frame">
+       <div class="relative z-10 overflow-hidden rounded-[28px]"><img data-template-id="hero-image" loading="lazy" class="canva-image w-full aspect-[4/5] object-cover" src="https://images.pexels.com/photos/6893375/pexels-photo-6893375.jpeg" alt="Overhead view of a modern desk with laptop, blueprint, and stationery on a marble surface.">
+       </div>
+       <div data-template-id="hero-note" class="canva-card absolute z-20 -left-6 bottom-8 md:-left-10 rounded-[20px] px-5 py-4 max-w-[220px] shadow-[0_18px_40px_rgba(27,48,38,.12)]" style="background: rgb(251, 250, 246);">
+        <p data-template-id="hero-note-label" class="canva-text uppercase tracking-[0.18em] text-[10px] font-semibold mb-2" style="color: rgb(122, 133, 124); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.16rem;">Currently</p>
+        <p data-template-id="hero-note-copy" class="canva-text display-font leading-snug" style="color: rgb(23, 63, 49); font-weight: 600; font-style: normal; font-size: 18px;">Available for select collaborations in 2026.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="work" class="w-full px-5 sm:px-8 lg:px-10 py-20 lg:py-24 bg-[#fbfaf6]/80">
+     <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+       <div>
+        <p data-template-id="work-kicker" class="canva-text uppercase tracking-[0.18em] text-xs font-semibold mb-3" style="color: rgb(123, 133, 125); font-weight: 700; font-style: normal; font-size: 11px; letter-spacing: 0.16rem;">Selected Work</p>
+        <h2 data-template-id="work-title" class="canva-text display-font leading-tight" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 38px; line-height: 1.1;">Recent projects, shaped with intention.</h2>
+       </div>
+       <p data-template-id="work-copy" class="canva-text max-w-md leading-7" style="color: rgb(107, 117, 109); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.7;">A collection of brand, digital, and editorial systems created for people building considered things.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+       <article data-template-id="project-card-1" class="canva-card project-card bg-[#fffdf8] rounded-[24px] overflow-hidden" style="background: rgb(255, 253, 248);">
+        <div class="overflow-hidden"><img data-template-id="project-1-image" loading="lazy" class="canva-image w-full aspect-[1.35/1] object-cover" src="https://images.pexels.com/photos/7598016/pexels-photo-7598016.jpeg" alt="Elegant flat lay of branding strategy documents with a natural twig accent.">
+        </div>
+        <div class="p-5 sm:p-6">
+         <div class="flex items-center justify-between gap-4 mb-3">
+          <p data-template-id="project-1-category" class="canva-text uppercase tracking-[0.16em] text-[10px] font-semibold" style="color: rgb(123, 133, 125); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.14rem;">Brand Identity</p><span class="text-[#7a847a]"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+         </div>
+         <h3 data-template-id="project-1-title" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 25px;">Luma Botanics</h3>
+         <p data-template-id="project-1-copy" class="canva-text mt-2 leading-6" style="color: rgb(109, 118, 111); font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.6;">A tactile identity system for a modern apothecary rooted in ritual and restraint.</p>
+        </div>
+       </article>
+       <article data-template-id="project-card-2" class="canva-card project-card bg-[#fffdf8] rounded-[24px] overflow-hidden md:mt-12" style="background: rgb(255, 253, 248);">
+        <div class="overflow-hidden"><img data-template-id="project-2-image" loading="lazy" class="canva-image w-full aspect-[1.35/1] object-cover" src="https://images.pexels.com/photos/19876064/pexels-photo-19876064.jpeg" alt="An aesthetically pleasing workspace featuring a laptop with a photographer's website, surrounded by minimalist decor.">
+        </div>
+        <div class="p-5 sm:p-6">
+         <div class="flex items-center justify-between gap-4 mb-3">
+          <p data-template-id="project-2-category" class="canva-text uppercase tracking-[0.16em] text-[10px] font-semibold" style="color: rgb(123, 133, 125); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.14rem;">Digital Experience</p><span class="text-[#7a847a]"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+         </div>
+         <h3 data-template-id="project-2-title" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 25px;">Mori House</h3>
+         <p data-template-id="project-2-copy" class="canva-text mt-2 leading-6" style="color: rgb(109, 118, 111); font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.6;">A calm digital home for an interiors studio balancing warmth, clarity, and craft.</p>
+        </div>
+       </article>
+       <article data-template-id="project-card-3" class="canva-card project-card bg-[#fffdf8] rounded-[24px] overflow-hidden" style="background: rgb(255, 253, 248);">
+        <div class="overflow-hidden"><img data-template-id="project-3-image" loading="lazy" class="canva-image w-full aspect-[1.35/1] object-cover" src="https://images.pexels.com/photos/4271615/pexels-photo-4271615.jpeg" alt="Explore various elegant magazine layouts, showcasing fashion, design, and more, perfect for creative inspiration.">
+        </div>
+        <div class="p-5 sm:p-6">
+         <div class="flex items-center justify-between gap-4 mb-3">
+          <p data-template-id="project-3-category" class="canva-text uppercase tracking-[0.16em] text-[10px] font-semibold" style="color: rgb(123, 133, 125); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.14rem;">Editorial</p><span class="text-[#7a847a]"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+         </div>
+         <h3 data-template-id="project-3-title" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 25px;">Field Notes / Issue 04</h3>
+         <p data-template-id="project-3-copy" class="canva-text mt-2 leading-6" style="color: rgb(109, 118, 111); font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.6;">Editorial direction and print design for a seasonal publication about place and process.</p>
+        </div>
+       </article>
+       <article data-template-id="project-card-4" class="canva-card project-card bg-[#fffdf8] rounded-[24px] overflow-hidden md:mt-12" style="background: rgb(255, 253, 248);">
+        <div class="overflow-hidden"><img data-template-id="project-4-image" loading="lazy" class="canva-image w-full aspect-[1.35/1] object-cover" src="https://images.pexels.com/photos/8066712/pexels-photo-8066712.png" alt="Four smartphones with white screens arranged on geometric white steps in a minimalist setting.">
+        </div>
+        <div class="p-5 sm:p-6">
+         <div class="flex items-center justify-between gap-4 mb-3">
+          <p data-template-id="project-4-category" class="canva-text uppercase tracking-[0.16em] text-[10px] font-semibold" style="color: rgb(123, 133, 125); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.14rem;">Product Design</p><span class="text-[#7a847a]"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+         </div>
+         <h3 data-template-id="project-4-title" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 25px;">Still Journal App</h3>
+         <p data-template-id="project-4-copy" class="canva-text mt-2 leading-6" style="color: rgb(109, 118, 111); font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.6;">A reflective mobile experience designed to make everyday note-taking feel intentional.</p>
+        </div>
+       </article>
+      </div>
+     </div>
+    </section>
+    <section id="about" class="w-full px-5 sm:px-8 lg:px-10 py-20 lg:py-28">
+     <div class="max-w-7xl mx-auto grid lg:grid-cols-[.85fr_1.15fr] gap-12 lg:gap-20 items-center">
+      <div class="relative">
+       <div class="overflow-hidden rounded-[28px]"><img data-template-id="about-image" loading="lazy" class="canva-image w-full aspect-[4/5] object-cover" src="https://images.pexels.com/photos/5652205/pexels-photo-5652205.jpeg" alt="A thoughtful woman gazes outside, bathed in soft window light, creating a serene mood.">
+       </div>
+       <div data-template-id="about-badge" class="canva-tag absolute right-5 bottom-5 rounded-full px-4 py-2 text-xs font-semibold" style="background: rgb(238, 244, 237); color: rgb(49, 92, 73); font-weight: 700; font-style: normal; font-size: 12px;">Based in Austin, TX</div>
+      </div>
+      <div>
+       <p data-template-id="about-kicker" class="canva-text uppercase tracking-[0.18em] text-xs font-semibold mb-4" style="color: rgb(122, 133, 125); font-weight: 700; font-style: normal; font-size: 11px; letter-spacing: 0.16rem;">About</p>
+       <h2 data-template-id="about-title" class="canva-text display-font leading-tight max-w-3xl" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 42px; line-height: 1.1;">Design that feels considered, human, and lasting.</h2>
+       <p data-template-id="about-copy-1" class="canva-text mt-6 leading-8 max-w-2xl" style="color: rgb(102, 113, 105); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.7;">I’m Amelia, an independent designer working across identity, art direction, and digital experiences for emerging brands and creative businesses.</p>
+       <p data-template-id="about-copy-2" class="canva-text mt-4 leading-8 max-w-2xl" style="color: rgb(102, 113, 105); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.7;">My practice is rooted in thoughtful strategy, tactile references, and a belief that the strongest work leaves room for feeling.</p>
+       <div class="grid grid-cols-3 gap-4 border-t border-[#d8d1c6] mt-8 pt-6 max-w-2xl">
+        <div>
+         <p data-template-id="stat-1-value" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 30px;">08</p>
+         <p data-template-id="stat-1-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(125, 134, 127); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.12rem;">Years practicing</p>
+        </div>
+        <div>
+         <p data-template-id="stat-2-value" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 30px;">24</p>
+         <p data-template-id="stat-2-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(125, 134, 127); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.12rem;">Projects launched</p>
+        </div>
+        <div>
+         <p data-template-id="stat-3-value" class="canva-text display-font" style="color: rgb(23, 63, 49); font-weight: 700; font-style: normal; font-size: 30px;">06</p>
+         <p data-template-id="stat-3-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(125, 134, 127); font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.12rem;">Countries worked in</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="contact" class="w-full px-5 sm:px-8 lg:px-10 pb-10">
+     <div data-template-id="contact-panel" class="canva-panel max-w-7xl mx-auto rounded-[30px] px-6 sm:px-10 lg:px-14 py-10 lg:py-14" style="background: rgb(23, 63, 49);">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+       <div>
+        <p data-template-id="contact-kicker" class="canva-text uppercase tracking-[0.18em] text-xs font-semibold mb-4" style="color: rgb(182, 201, 189); font-weight: 700; font-style: normal; font-size: 11px; letter-spacing: 0.16rem;">Let’s Work Together</p>
+        <h2 data-template-id="contact-title" class="canva-text display-font leading-tight max-w-3xl" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 42px; line-height: 1.1;">Have a project in mind? I’d love to hear about it.</h2>
+        <p data-template-id="contact-copy" class="canva-text mt-4 max-w-2xl leading-7" style="color: rgb(215, 226, 218); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.7;">I’m currently booking brand and digital projects for late summer and autumn.</p>
+       </div><a href="mailto:hello@ameliahart.studio" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold no-underline self-start lg:self-auto" style="background: rgb(244, 239, 230); color: rgb(23, 63, 49); font-weight: 600; font-style: normal; font-size: 16px;">hello@ameliahart.studio</a>
+      </div>
+     </div>
+    </section>
+   </main>
+   <footer class="w-full px-5 sm:px-8 lg:px-10 py-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+     <p data-template-id="footer-copy" class="canva-text text-sm" style="color: rgb(108, 118, 110); font-weight: 400; font-style: normal; font-size: 13px;">© 2026 Amelia Hart Studio</p>
+     <div class="flex items-center gap-5 text-sm"><a href="#" data-template-id="footer-link-1" class="canva-link nav-link no-underline" style="color: rgb(89, 102, 94); font-weight: 500; font-style: normal; font-size: 13px;">Instagram</a> <a href="#" data-template-id="footer-link-2" class="canva-link nav-link no-underline" style="color: rgb(89, 102, 94); font-weight: 500; font-style: normal; font-size: 13px;">Are.na</a> <a href="#" data-template-id="footer-link-3" class="canva-link nav-link no-underline" style="color: rgb(89, 102, 94); font-weight: 500; font-style: normal; font-size: 13px;">Email</a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a08b73798d615c7d',t:'MTc4MDk1ODk4MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
