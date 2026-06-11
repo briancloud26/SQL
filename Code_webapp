@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en"><head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northstar — Modern work, clearly aligned</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#17332f;
+      --muted:#667a75;
+      --cream:#f7f5ee;
+      --mint:#dfeee7;
+      --sage:#a5c7b4;
+      --line:#dbe4dd;
+      --deep:#163d35;
+      --accent:#d7f2df;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'DM Sans', sans-serif;
+      color:var(--ink);
+      background:#f7f5ee;
+    }
+    .heading-font{font-family:'Fraunces', serif}
+    .soft-grid{
+      background-image:
+        linear-gradient(rgba(23,51,47,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23,51,47,.05) 1px, transparent 1px);
+      background-size:28px 28px;
+    }
+    .hero-glow:before{
+      content:"";
+      position:absolute;
+      inset:auto 8% -8% auto;
+      width:34rem;
+      height:34rem;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(198,231,211,.8), rgba(198,231,211,0));
+      filter:blur(10px);
+      z-index:0;
+    }
+    .shadow-soft{box-shadow:0 18px 45px rgba(31,61,54,.11)}
+    .shadow-card{box-shadow:0 12px 28px rgba(31,61,54,.08)}
+    .nav-link{position:relative}
+    .nav-link:after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-8px;
+      height:1px;
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .25s ease;
+      background:var(--ink);
+    }
+    .nav-link:hover:after{transform:scaleX(1)}
+    .price-card{transition:transform .25s ease, box-shadow .25s ease}
+    .price-card:hover{transform:translateY(-5px)}
+    .fade-up{animation:fadeUp .75s ease both}
+    .fade-up.delay-1{animation-delay:.08s}
+    .fade-up.delay-2{animation-delay:.16s}
+    .fade-up.delay-3{animation-delay:.24s}
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(18px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+    .pricing-switch .switch-dot{transition:transform .25s ease}
+    .pricing-switch.is-yearly .switch-dot{transform:translateX(24px)}
+    .pricing-switch.is-yearly{background:#21493f}
+    @media (max-width: 768px){
+      .hero-glow:before{width:22rem;height:22rem;right:-5rem}
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full" style="background: linear-gradient(rgb(251, 250, 246) 0%, rgb(246, 244, 238) 100%);">
+  <header data-template-id="site-header" class="canva-header w-full border-b border-[#e4e7e1]/80 bg-[#f8f6ef]/90 backdrop-blur" style="background: rgb(248, 246, 239);">
+   <div class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+    <div class="h-20 flex items-center justify-between"><a href="#" class="flex items-center gap-3" aria-label="Northstar home">
+      <div data-template-id="brand-mark" class="canva-card w-9 h-9 rounded-xl flex items-center justify-center" style="background: rgb(223, 238, 231); color: rgb(23, 51, 47);"><i data-lucide="sparkles" class="w-5 h-5"></i>
+      </div><span data-template-id="brand-name" class="canva-text heading-font text-[24px] leading-none" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">Northstar</span> </a>
+     <nav class="hidden lg:flex items-center gap-9" aria-label="Primary navigation"><a data-template-id="nav-product" href="#features" class="canva-link nav-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Product</a> <a data-template-id="nav-solutions" href="#showcase" class="canva-link nav-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Solutions</a> <a data-template-id="nav-pricing" href="#pricing" class="canva-link nav-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Pricing</a> <a data-template-id="nav-resources" href="#footer" class="canva-link nav-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Resources</a>
+     </nav>
+     <div class="hidden lg:flex items-center gap-5"><a data-template-id="login-link" href="#" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Log in</a> <button data-template-id="header-cta" class="canva-button rounded-full px-5 py-3 text-[14px] font-medium transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" style="background: rgb(23, 61, 53); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start free</button>
+     </div><button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg border border-[#dbe4dd] focus:outline-none focus:ring-2 focus:ring-[#21493f]" aria-label="Open menu" aria-expanded="false"> <i data-lucide="menu" class="w-5 h-5"></i> </button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden pb-5 border-t border-[#e7ebe5]">
+     <nav class="pt-4 flex flex-col gap-4" aria-label="Mobile navigation"><a data-template-id="mobile-nav-product" href="#features" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Product</a> <a data-template-id="mobile-nav-solutions" href="#showcase" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Solutions</a> <a data-template-id="mobile-nav-pricing" href="#pricing" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Pricing</a> <a data-template-id="mobile-nav-resources" href="#footer" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Resources</a>
+      <div class="pt-2 flex flex-col gap-3"><a data-template-id="mobile-login-link" href="#" class="canva-link text-[15px]" style="color: rgb(54, 83, 76); font-weight: 400; font-style: normal; font-size: 16px;">Log in</a> <button data-template-id="mobile-header-cta" class="canva-button rounded-full px-5 py-3 text-[14px] font-medium text-left" style="background: rgb(23, 61, 53); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start free</button>
+      </div>
+     </nav>
+    </div>
+   </div>
+  </header>
+  <main>
+   <section class="relative overflow-hidden hero-glow">
+    <div class="soft-grid absolute inset-0 opacity-30"></div>
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-16 lg:pt-24 pb-16 lg:pb-20">
+     <div class="grid lg:grid-cols-[1.02fr_.98fr] gap-12 lg:gap-16 items-center">
+      <div class="max-w-2xl">
+       <div data-template-id="hero-eyebrow" class="canva-text fade-up inline-flex items-center rounded-full border border-[#cfe0d5] px-3.5 py-2 text-[12px] uppercase tracking-[0.18em] font-semibold mb-6" style="background: rgb(238, 246, 240); color: rgb(77, 108, 97); font-weight: 400; font-style: normal; font-size: 16px;">Built for focused teams</div>
+       <h1 data-template-id="hero-title" class="canva-text heading-font fade-up delay-1 leading-[1.02] tracking-[-0.03em] mb-6" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 64px; line-height: 1.02;">The calmer way to move work forward.</h1>
+       <p data-template-id="hero-copy" class="canva-text fade-up delay-2 text-[18px] leading-8 max-w-xl mb-8" style="color: rgb(98, 118, 111); font-weight: 400; font-style: normal; font-size: 18px; line-height: 1.6;">Northstar brings projects, priorities, and progress into one beautifully simple workspace—so your team can spend less time chasing updates and more time making them.</p>
+       <div class="fade-up delay-3 flex flex-col sm:flex-row gap-3 sm:items-center"><button data-template-id="hero-primary-cta" class="canva-button rounded-full px-6 py-4 text-[15px] font-medium inline-flex items-center justify-center gap-2 transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" style="background: rgb(23, 61, 53); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start free for 14 days</button> <button data-template-id="hero-secondary-cta" class="canva-button rounded-full px-6 py-4 text-[15px] font-medium inline-flex items-center justify-center gap-2 border transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" style="background: rgb(251, 250, 246); color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Watch the tour</button>
+       </div>
+       <div class="mt-5 flex items-center gap-5 flex-wrap">
+        <div data-template-id="hero-note-1" class="canva-text text-[13px] flex items-center gap-2" style="color: rgb(106, 124, 118); font-weight: 400; font-style: normal; font-size: 16px;">No credit card required</div>
+        <div data-template-id="hero-note-2" class="canva-text text-[13px] flex items-center gap-2" style="color: rgb(106, 124, 118); font-weight: 400; font-style: normal; font-size: 16px;">Setup in under 5 minutes</div>
+       </div>
+      </div>
+      <div class="relative fade-up delay-2">
+       <div class="absolute -top-7 -right-6 w-24 h-24 rounded-full border border-[#d6e5dc]"></div>
+       <div class="absolute -bottom-8 -left-6 w-20 h-20 rounded-full bg-[#dfeee7]"></div>
+       <div data-template-id="hero-visual-frame" class="canva-card relative rounded-[26px] p-3 shadow-soft" style="background: rgb(238, 245, 239);">
+        <div class="rounded-[19px] overflow-hidden border border-[#dfe6df] bg-white">
+         <div class="h-9 bg-[#eef2eb] border-b border-[#dfe6df] flex items-center gap-1.5 px-4"><span class="w-2.5 h-2.5 rounded-full bg-[#d8afa5]"></span> <span class="w-2.5 h-2.5 rounded-full bg-[#e7d6a7]"></span> <span class="w-2.5 h-2.5 rounded-full bg-[#a8c8b1]"></span>
+         </div><img data-template-id="hero-image" loading="lazy" class="canva-image w-full h-[360px] sm:h-[440px] object-cover" src="https://images.pexels.com/photos/34069/pexels-photo.jpg" alt="A laptop showing an analytics dashboard with charts and graphs, symbolizing modern data analysis tools.">
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="border-y border-[#e5e9e2] bg-[#f3f2eb]">
+    <div class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-8">
+     <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+      <p data-template-id="trusted-label" class="canva-text text-[13px] uppercase tracking-[0.18em] font-semibold text-center lg:text-left" style="color: rgb(124, 143, 136); font-weight: 400; font-style: normal; font-size: 16px;">Trusted by thoughtful teams at</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-7 sm:gap-10 items-center w-full lg:w-auto text-center">
+       <div data-template-id="logo-1" class="canva-text heading-font text-[22px]" style="color: rgb(118, 134, 127); font-weight: 600; font-style: normal; font-size: 16px;">Acre</div>
+       <div data-template-id="logo-2" class="canva-text heading-font text-[22px]" style="color: rgb(118, 134, 127); font-weight: 600; font-style: normal; font-size: 16px;">Morrow</div>
+       <div data-template-id="logo-3" class="canva-text heading-font text-[22px]" style="color: rgb(118, 134, 127); font-weight: 600; font-style: normal; font-size: 16px;">Canopy</div>
+       <div data-template-id="logo-4" class="canva-text heading-font text-[22px]" style="color: rgb(118, 134, 127); font-weight: 600; font-style: normal; font-size: 16px;">Fable</div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="features" class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-20 lg:py-28">
+    <div class="max-w-3xl">
+     <div data-template-id="features-eyebrow" class="canva-text text-[12px] uppercase tracking-[0.2em] font-semibold mb-4" style="color: rgb(109, 138, 121); font-weight: 400; font-style: normal; font-size: 16px;">Why teams choose Northstar</div>
+     <h2 data-template-id="features-title" class="canva-text heading-font leading-[1.08] tracking-[-0.025em] mb-5" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 48px; line-height: 1.08;">Everything your team needs, nothing it doesn’t.</h2>
+     <p data-template-id="features-copy" class="canva-text text-[17px] leading-8 max-w-2xl" style="color: rgb(103, 122, 116); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Designed to keep the signal high and the noise low, Northstar gives teams a shared rhythm for planning, tracking, and growing.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5 mt-12">
+     <article data-template-id="feature-card-1" class="canva-card rounded-3xl p-7 border border-[#e1e8e1] shadow-card" style="background: rgb(255, 254, 250);">
+      <div data-template-id="feature-icon-1" class="canva-card w-11 h-11 rounded-2xl flex items-center justify-center mb-8" style="background: rgb(230, 240, 232); color: rgb(43, 90, 77);"><i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      </div>
+      <h3 data-template-id="feature-title-1" class="canva-text heading-font mb-3" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 25px;">Plan with clarity</h3>
+      <p data-template-id="feature-copy-1" class="canva-text text-[15px] leading-7" style="color: rgb(107, 127, 120); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.55;">Turn goals into visual roadmaps, tidy timelines, and actionable next steps your team can actually follow.</p>
+     </article>
+     <article data-template-id="feature-card-2" class="canva-card rounded-3xl p-7 border border-[#e1e8e1] shadow-card" style="background: rgb(255, 254, 250);">
+      <div data-template-id="feature-icon-2" class="canva-card w-11 h-11 rounded-2xl flex items-center justify-center mb-8" style="background: rgb(237, 240, 223); color: rgb(93, 111, 66);"><i data-lucide="git-branch" class="w-5 h-5"></i>
+      </div>
+      <h3 data-template-id="feature-title-2" class="canva-text heading-font mb-3" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 25px;">Stay in sync</h3>
+      <p data-template-id="feature-copy-2" class="canva-text text-[15px] leading-7" style="color: rgb(107, 127, 120); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.55;">Bring conversations, ownership, and updates into one place without adding another noisy channel.</p>
+     </article>
+     <article data-template-id="feature-card-3" class="canva-card rounded-3xl p-7 border border-[#e1e8e1] shadow-card" style="background: rgb(255, 254, 250);">
+      <div data-template-id="feature-icon-3" class="canva-card w-11 h-11 rounded-2xl flex items-center justify-center mb-8" style="background: rgb(242, 234, 223); color: rgb(124, 99, 66);"><i data-lucide="line-chart" class="w-5 h-5"></i>
+      </div>
+      <h3 data-template-id="feature-title-3" class="canva-text heading-font mb-3" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 25px;">See what’s working</h3>
+      <p data-template-id="feature-copy-3" class="canva-text text-[15px] leading-7" style="color: rgb(107, 127, 120); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.55;">Simple reporting helps you spot momentum, unblock work, and celebrate progress as it happens.</p>
+     </article>
+    </div>
+   </section>
+   <section id="showcase" class="bg-[#eaf2ec] py-20 lg:py-28">
+    <div class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div>
+       <div data-template-id="showcase-eyebrow" class="canva-text text-[12px] uppercase tracking-[0.2em] font-semibold mb-4" style="color: rgb(109, 138, 121); font-weight: 400; font-style: normal; font-size: 16px;">A better weekly rhythm</div>
+       <h2 data-template-id="showcase-title" class="canva-text heading-font leading-[1.08] tracking-[-0.025em] mb-5" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 46px; line-height: 1.08;">Make progress visible before the meeting starts.</h2>
+       <p data-template-id="showcase-copy" class="canva-text text-[17px] leading-8 mb-8 max-w-xl" style="color: rgb(100, 121, 112); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Northstar gives every project a living pulse, helping teams understand what moved, what matters next, and where support is needed.</p>
+       <div class="space-y-5">
+        <div class="flex gap-4">
+         <div data-template-id="benefit-icon-1" class="canva-card shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: rgb(219, 234, 222); color: rgb(45, 92, 77);"><i data-lucide="check" class="w-4 h-4"></i>
+         </div>
+         <div>
+          <h3 data-template-id="benefit-title-1" class="canva-text font-semibold mb-1" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 19px;">One source of truth</h3>
+          <p data-template-id="benefit-copy-1" class="canva-text text-[14px] leading-6" style="color: rgb(107, 125, 118); font-weight: 400; font-style: normal; font-size: 16px;">Keep priorities, owners, and updates in one calm workspace.</p>
+         </div>
+        </div>
+        <div class="flex gap-4">
+         <div data-template-id="benefit-icon-2" class="canva-card shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: rgb(219, 234, 222); color: rgb(45, 92, 77);"><i data-lucide="check" class="w-4 h-4"></i>
+         </div>
+         <div>
+          <h3 data-template-id="benefit-title-2" class="canva-text font-semibold mb-1" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 19px;">Less status chasing</h3>
+          <p data-template-id="benefit-copy-2" class="canva-text text-[14px] leading-6" style="color: rgb(107, 125, 118); font-weight: 400; font-style: normal; font-size: 16px;">See what changed and what needs attention at a glance.</p>
+         </div>
+        </div>
+        <div class="flex gap-4">
+         <div data-template-id="benefit-icon-3" class="canva-card shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: rgb(219, 234, 222); color: rgb(45, 92, 77);"><i data-lucide="check" class="w-4 h-4"></i>
+         </div>
+         <div>
+          <h3 data-template-id="benefit-title-3" class="canva-text font-semibold mb-1" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 19px;">Momentum you can feel</h3>
+          <p data-template-id="benefit-copy-3" class="canva-text text-[14px] leading-6" style="color: rgb(107, 125, 118); font-weight: 400; font-style: normal; font-size: 16px;">Celebrate progress with simple signals everyone understands.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div data-template-id="showcase-panel" class="canva-card rounded-[28px] p-5 sm:p-6 shadow-soft" style="background: rgb(247, 251, 246);">
+       <div class="rounded-[20px] bg-white border border-[#dfe8df] overflow-hidden">
+        <div class="p-5 border-b border-[#e5ebe4] flex justify-between items-center">
+         <div>
+          <div data-template-id="showcase-panel-kicker" class="canva-text text-[11px] uppercase tracking-[0.18em] mb-1" style="color: rgb(135, 151, 144); font-weight: 400; font-style: normal; font-size: 16px;">Q3 roadmap</div>
+          <div data-template-id="showcase-panel-title" class="canva-text heading-font text-[22px]" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Growth initiatives</div>
+         </div>
+         <div class="flex -space-x-2"><span class="w-8 h-8 rounded-full bg-[#d8b8a6] border-2 border-white"></span> <span class="w-8 h-8 rounded-full bg-[#aec8bd] border-2 border-white"></span> <span class="w-8 h-8 rounded-full bg-[#b5b8d7] border-2 border-white"></span>
+         </div>
+        </div>
+        <div class="p-5 space-y-4">
+         <div class="grid grid-cols-[1fr_1.6fr_.6fr] gap-3 text-[11px] uppercase tracking-[0.12em] text-[#8a9994]"><span data-template-id="table-head-1" class="canva-text" style="color: rgb(145, 160, 152); font-weight: 400; font-style: normal; font-size: 16px;">Project</span> <span data-template-id="table-head-2" class="canva-text" style="color: rgb(145, 160, 152); font-weight: 400; font-style: normal; font-size: 16px;">Progress</span> <span data-template-id="table-head-3" class="canva-text text-right" style="color: rgb(145, 160, 152); font-weight: 400; font-style: normal; font-size: 16px;">Status</span>
+         </div>
+         <div class="grid grid-cols-[1fr_1.6fr_.6fr] gap-3 items-center py-3 border-t border-[#edf1ec]">
+          <div data-template-id="task-label-1" class="canva-text text-[13px]" style="color: rgb(49, 74, 67); font-weight: 400; font-style: normal; font-size: 16px;">Website refresh</div>
+          <div class="h-2 rounded-full bg-[#edf2ee] overflow-hidden">
+           <div class="h-full w-[74%] rounded-full bg-[#7da88d]"></div>
+          </div>
+          <div data-template-id="task-status-1" class="canva-text text-[12px] text-right" style="color: rgb(92, 116, 108); font-weight: 400; font-style: normal; font-size: 16px;">74%</div>
+         </div>
+         <div class="grid grid-cols-[1fr_1.6fr_.6fr] gap-3 items-center py-3 border-t border-[#edf1ec]">
+          <div data-template-id="task-label-2" class="canva-text text-[13px]" style="color: rgb(49, 74, 67); font-weight: 400; font-style: normal; font-size: 16px;">Launch plan</div>
+          <div class="h-2 rounded-full bg-[#edf2ee] overflow-hidden">
+           <div class="h-full w-[52%] rounded-full bg-[#b5ccb9]"></div>
+          </div>
+          <div data-template-id="task-status-2" class="canva-text text-[12px] text-right" style="color: rgb(92, 116, 108); font-weight: 400; font-style: normal; font-size: 16px;">52%</div>
+         </div>
+         <div class="grid grid-cols-[1fr_1.6fr_.6fr] gap-3 items-center py-3 border-t border-[#edf1ec]">
+          <div data-template-id="task-label-3" class="canva-text text-[13px]" style="color: rgb(49, 74, 67); font-weight: 400; font-style: normal; font-size: 16px;">Research sprint</div>
+          <div class="h-2 rounded-full bg-[#edf2ee] overflow-hidden">
+           <div class="h-full w-[86%] rounded-full bg-[#5b7e70]"></div>
+          </div>
+          <div data-template-id="task-status-3" class="canva-text text-[12px] text-right" style="color: rgb(92, 116, 108); font-weight: 400; font-style: normal; font-size: 16px;">86%</div>
+         </div>
+        </div>
+        <div class="px-5 pb-5">
+         <div class="rounded-2xl bg-[#f7faf6] border border-[#e3ebe2] p-4 flex items-center justify-between">
+          <div>
+           <div data-template-id="mini-card-kicker" class="canva-text text-[11px] uppercase tracking-[0.16em] mb-1" style="color: rgb(139, 153, 146); font-weight: 400; font-style: normal; font-size: 16px;">Next milestone</div>
+           <div data-template-id="mini-card-title" class="canva-text text-[14px] font-semibold" style="color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Brand review on Friday</div>
+          </div>
+          <div data-template-id="mini-card-badge" class="canva-tag rounded-full px-3 py-1 text-[12px]" style="background: rgb(220, 238, 224); color: rgb(60, 103, 79); font-weight: 400; font-style: normal; font-size: 16px;">On track</div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="pricing" class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-20 lg:py-28">
+    <div class="text-center max-w-3xl mx-auto">
+     <div data-template-id="pricing-eyebrow" class="canva-text text-[12px] uppercase tracking-[0.2em] font-semibold mb-4" style="color: rgb(109, 138, 121); font-weight: 400; font-style: normal; font-size: 16px;">Simple pricing</div>
+     <h2 data-template-id="pricing-title" class="canva-text heading-font leading-[1.08] tracking-[-0.025em] mb-5" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 48px; line-height: 1.08;">Choose the pace that fits your team.</h2>
+     <p data-template-id="pricing-copy" class="canva-text text-[17px] leading-8 mb-8" style="color: rgb(104, 124, 117); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Start small, grow when you’re ready, and keep every plan refreshingly simple.</p>
+     <div class="inline-flex items-center gap-3"><span data-template-id="monthly-label" class="canva-text text-[14px] font-medium" style="color: rgb(79, 102, 95); font-weight: 500; font-style: normal; font-size: 16px;">Monthly</span> <button id="pricing-toggle" class="pricing-switch w-14 h-8 rounded-full bg-[#c7d9ce] p-1 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" aria-label="Toggle yearly pricing" aria-pressed="false"> <span class="switch-dot block w-6 h-6 rounded-full bg-white shadow"></span> </button> <span data-template-id="yearly-label" class="canva-text text-[14px] font-medium" style="color: rgb(79, 102, 95); font-weight: 500; font-style: normal; font-size: 16px;">Yearly</span> <span data-template-id="save-badge" class="canva-tag rounded-full px-3 py-1 text-[12px] font-medium" style="background: rgb(224, 238, 228); color: rgb(69, 108, 88); font-weight: 400; font-style: normal; font-size: 16px;">Save 20%</span>
+     </div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-5 mt-12">
+     <article data-template-id="pricing-card-1" class="canva-card price-card rounded-[28px] p-7 border border-[#e2e8e2] shadow-card" style="background: rgb(255, 254, 250);">
+      <div data-template-id="plan-name-1" class="canva-text text-[14px] uppercase tracking-[0.16em] font-semibold mb-5" style="color: rgb(111, 133, 124); font-weight: 400; font-style: normal; font-size: 16px;">Starter</div>
+      <div class="flex items-end gap-2 mb-2"><span data-template-id="plan-price-1-monthly" class="canva-text heading-font text-[48px] leading-none monthly-price" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">$0</span> <span data-template-id="plan-price-1-yearly" class="canva-text heading-font text-[48px] leading-none yearly-price hidden" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">$0</span> <span data-template-id="plan-period-1" class="canva-text text-[14px] mb-1" style="color: rgb(115, 132, 126); font-weight: 400; font-style: normal; font-size: 16px;">/mo</span>
+      </div>
+      <p data-template-id="plan-copy-1" class="canva-text text-[14px] leading-6 mb-6" style="color: rgb(110, 128, 121); font-weight: 400; font-style: normal; font-size: 16px;">For small teams getting organized.</p><button data-template-id="plan-cta-1" class="canva-button w-full rounded-full px-5 py-3.5 text-[14px] font-medium mb-6 border transition hover:bg-[#f8fbf7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" style="background: rgb(255, 254, 250); color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Get started</button>
+      <ul class="space-y-3">
+       <li data-template-id="plan-feature-1a" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Up to 3 projects</li>
+       <li data-template-id="plan-feature-1b" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Basic planning views</li>
+       <li data-template-id="plan-feature-1c" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Weekly check-ins</li>
+      </ul>
+     </article>
+     <article data-template-id="pricing-card-2" class="canva-card price-card relative rounded-[28px] p-7 shadow-soft" style="background: rgb(23, 61, 53);">
+      <div data-template-id="popular-badge" class="canva-tag absolute top-5 right-5 rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.12em] font-semibold" style="background: rgb(220, 238, 224); color: rgb(45, 92, 77); font-weight: 400; font-style: normal; font-size: 16px;">Most popular</div>
+      <div data-template-id="plan-name-2" class="canva-text text-[14px] uppercase tracking-[0.16em] font-semibold mb-5" style="color: rgb(185, 208, 197); font-weight: 400; font-style: normal; font-size: 16px;">Growth</div>
+      <div class="flex items-end gap-2 mb-2"><span data-template-id="plan-price-2-monthly" class="canva-text heading-font text-[48px] leading-none monthly-price" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">$12</span> <span data-template-id="plan-price-2-yearly" class="canva-text heading-font text-[48px] leading-none yearly-price hidden" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">$10</span> <span data-template-id="plan-period-2" class="canva-text text-[14px] mb-1" style="color: rgb(191, 210, 200); font-weight: 400; font-style: normal; font-size: 16px;">/user/mo</span>
+      </div>
+      <p data-template-id="plan-copy-2" class="canva-text text-[14px] leading-6 mb-6" style="color: rgb(211, 224, 218); font-weight: 400; font-style: normal; font-size: 16px;">For teams ready to build real momentum.</p><button data-template-id="plan-cta-2" class="canva-button w-full rounded-full px-5 py-3.5 text-[14px] font-medium mb-6 transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white" style="background: rgb(246, 244, 238); color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Start free trial</button>
+      <ul class="space-y-3">
+       <li data-template-id="plan-feature-2a" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(237, 245, 241); font-weight: 400; font-style: normal; font-size: 16px;">Unlimited projects</li>
+       <li data-template-id="plan-feature-2b" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(237, 245, 241); font-weight: 400; font-style: normal; font-size: 16px;">Timeline &amp; workload views</li>
+       <li data-template-id="plan-feature-2c" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(237, 245, 241); font-weight: 400; font-style: normal; font-size: 16px;">Advanced reporting</li>
+       <li data-template-id="plan-feature-2d" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(237, 245, 241); font-weight: 400; font-style: normal; font-size: 16px;">Custom team rituals</li>
+      </ul>
+     </article>
+     <article data-template-id="pricing-card-3" class="canva-card price-card rounded-[28px] p-7 border border-[#e2e8e2] shadow-card" style="background: rgb(255, 254, 250);">
+      <div data-template-id="plan-name-3" class="canva-text text-[14px] uppercase tracking-[0.16em] font-semibold mb-5" style="color: rgb(111, 133, 124); font-weight: 400; font-style: normal; font-size: 16px;">Scale</div>
+      <div class="flex items-end gap-2 mb-2"><span data-template-id="plan-price-3-monthly" class="canva-text heading-font text-[48px] leading-none monthly-price" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">$24</span> <span data-template-id="plan-price-3-yearly" class="canva-text heading-font text-[48px] leading-none yearly-price hidden" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">$19</span> <span data-template-id="plan-period-3" class="canva-text text-[14px] mb-1" style="color: rgb(115, 132, 126); font-weight: 400; font-style: normal; font-size: 16px;">/user/mo</span>
+      </div>
+      <p data-template-id="plan-copy-3" class="canva-text text-[14px] leading-6 mb-6" style="color: rgb(110, 128, 121); font-weight: 400; font-style: normal; font-size: 16px;">For growing organizations with bigger goals.</p><button data-template-id="plan-cta-3" class="canva-button w-full rounded-full px-5 py-3.5 text-[14px] font-medium mb-6 border transition hover:bg-[#f8fbf7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#21493f]" style="background: rgb(255, 254, 250); color: rgb(23, 51, 47); font-weight: 600; font-style: normal; font-size: 16px;">Talk to sales</button>
+      <ul class="space-y-3">
+       <li data-template-id="plan-feature-3a" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Everything in Growth</li>
+       <li data-template-id="plan-feature-3b" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Portfolio dashboards</li>
+       <li data-template-id="plan-feature-3c" class="canva-text text-[14px] flex items-center gap-2" style="color: rgb(66, 92, 84); font-weight: 400; font-style: normal; font-size: 16px;">Priority support</li>
+      </ul>
+     </article>
+    </div>
+   </section>
+  </main>
+  <footer id="footer" data-template-id="site-footer" class="canva-footer border-t border-[#e1e7e0]" style="background: rgb(245, 243, 236);">
+   <div class="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-12">
+    <div class="grid md:grid-cols-[1.4fr_.8fr_.8fr_.8fr] gap-10">
+     <div>
+      <div class="flex items-center gap-3 mb-4">
+       <div data-template-id="footer-brand-mark" class="canva-card w-9 h-9 rounded-xl flex items-center justify-center" style="background: rgb(223, 238, 231); color: rgb(23, 51, 47);"><i data-lucide="sparkles" class="w-5 h-5"></i>
+       </div><span data-template-id="footer-brand-name" class="canva-text heading-font text-[24px]" style="color: rgb(23, 51, 47); font-weight: 700; font-style: normal; font-size: 16px;">Northstar</span>
+      </div>
+      <p data-template-id="footer-copy" class="canva-text text-[14px] leading-6 max-w-xs" style="color: rgb(109, 126, 120); font-weight: 400; font-style: normal; font-size: 16px;">A quieter, clearer workspace for teams doing meaningful work together.</p>
+     </div>
+     <div>
+      <h3 data-template-id="footer-heading-1" class="canva-text text-[13px] uppercase tracking-[0.16em] font-semibold mb-4" style="color: rgb(100, 118, 111); font-weight: 400; font-style: normal; font-size: 19px;">Product</h3>
+      <div class="space-y-3"><a data-template-id="footer-link-1a" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Overview</a> <a data-template-id="footer-link-1b" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Features</a> <a data-template-id="footer-link-1c" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Integrations</a>
+      </div>
+     </div>
+     <div>
+      <h3 data-template-id="footer-heading-2" class="canva-text text-[13px] uppercase tracking-[0.16em] font-semibold mb-4" style="color: rgb(100, 118, 111); font-weight: 400; font-style: normal; font-size: 19px;">Company</h3>
+      <div class="space-y-3"><a data-template-id="footer-link-2a" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">About</a> <a data-template-id="footer-link-2b" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Customers</a> <a data-template-id="footer-link-2c" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Careers</a>
+      </div>
+     </div>
+     <div>
+      <h3 data-template-id="footer-heading-3" class="canva-text text-[13px] uppercase tracking-[0.16em] font-semibold mb-4" style="color: rgb(100, 118, 111); font-weight: 400; font-style: normal; font-size: 19px;">Resources</h3>
+      <div class="space-y-3"><a data-template-id="footer-link-3a" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Journal</a> <a data-template-id="footer-link-3b" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Guides</a> <a data-template-id="footer-link-3c" href="#" class="canva-link block text-[14px]" style="color: rgb(67, 90, 83); font-weight: 400; font-style: normal; font-size: 16px;">Help center</a>
+      </div>
+     </div>
+    </div>
+    <div class="mt-10 pt-6 border-t border-[#e2e7e0] flex flex-col sm:flex-row gap-3 justify-between">
+     <p data-template-id="copyright" class="canva-text text-[13px]" style="color: rgb(116, 133, 127); font-weight: 400; font-style: normal; font-size: 16px;">© 2026 Northstar Labs. All rights reserved.</p>
+     <div class="flex gap-4"><a data-template-id="legal-link-1" href="#" class="canva-link text-[13px]" style="color: rgb(116, 133, 127); font-weight: 400; font-style: normal; font-size: 16px;">Privacy</a> <a data-template-id="legal-link-2" href="#" class="canva-link text-[13px]" style="color: rgb(116, 133, 127); font-weight: 400; font-style: normal; font-size: 16px;">Terms</a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      const pricingToggle = document.getElementById('pricing-toggle');
+      pricingToggle.addEventListener('click', () => {
+        const isYearly = pricingToggle.classList.toggle('is-yearly');
+        pricingToggle.setAttribute('aria-pressed', String(isYearly));
+        document.querySelectorAll('.monthly-price').forEach(el => el.classList.toggle('hidden', isYearly));
+        document.querySelectorAll('.yearly-price').forEach(el => el.classList.toggle('hidden', !isYearly));
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a09d15926eab5195',t:'MTc4MTE0Mzg3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
