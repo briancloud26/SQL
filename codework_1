@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en"><head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mara Vale — Independent Designer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#25231f;
+      --muted:#716d64;
+      --paper:#f4f0e8;
+      --paper-2:#ebe5da;
+      --line:#d6cec1;
+      --sage:#aeb9a3;
+      --sage-dark:#6e7b67;
+      --clay:#c7775f;
+      --cream:#fbf8f2;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'DM Sans', sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+    }
+
+    .page-shell{
+      width:100%;
+      min-height:100%;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(255,255,255,.55), transparent 25%),
+        linear-gradient(135deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 48%),
+        var(--paper);
+    }
+
+    .editorial{
+      font-family:'Fraunces', serif;
+      letter-spacing:-0.045em;
+    }
+
+    .hairline{
+      border-color:var(--line);
+    }
+
+    .project-card:hover .project-image{
+      transform:scale(1.035);
+    }
+
+    .project-card:hover .project-arrow{
+      transform:translate(4px,-4px);
+    }
+
+    .project-image,
+    .project-arrow{
+      transition:all .45s cubic-bezier(.2,.65,.2,1);
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      animation: riseIn .8s ease forwards;
+    }
+
+    .delay-1{animation-delay:.08s}
+    .delay-2{animation-delay:.18s}
+    .delay-3{animation-delay:.3s}
+    .delay-4{animation-delay:.42s}
+
+    @keyframes riseIn{
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    .focus-ring:focus-visible{
+      outline:2px solid var(--clay);
+      outline-offset:4px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr !important;
+      }
+      .hero-visual{
+        margin-top:2rem;
+      }
+      .work-grid{
+        grid-template-columns:1fr !important;
+      }
+      .about-grid{
+        grid-template-columns:1fr !important;
+      }
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(244, 240, 232);">
+  <div class="page-shell w-full">
+   <header class="w-full px-5 sm:px-8 lg:px-12 py-5">
+    <nav class="max-w-[1380px] mx-auto flex flex-wrap items-center justify-between gap-4" aria-label="Primary navigation"><a href="#top" class="flex items-center gap-3 focus-ring">
+      <div data-template-id="brand-mark" class="canva-card w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold tracking-[0.08em]" style="background: rgb(37, 35, 31); color: rgb(244, 240, 232); font-weight: 600; font-style: normal; font-size: 16px;">MV</div>
+      <div class="leading-tight">
+       <div data-template-id="brand-name" class="canva-text text-[15px] font-semibold" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 16px;">Mara Vale</div>
+       <div data-template-id="brand-role" class="canva-text text-[11px] uppercase tracking-[0.18em] mt-0.5" style="color: rgb(113, 109, 100); font-weight: 400; font-style: normal; font-size: 16px;">Independent Designer</div>
+      </div></a>
+     <div class="flex items-center gap-5 sm:gap-8 text-sm"><a href="#work" data-template-id="nav-work" class="canva-link focus-ring transition-opacity hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Work</a> <a href="#about" data-template-id="nav-about" class="canva-link focus-ring transition-opacity hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">About</a> <a href="#contact" data-template-id="nav-contact" class="canva-link focus-ring transition-opacity hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Contact</a>
+     </div>
+     <div data-template-id="availability-badge" class="canva-tag hidden md:inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[11px] uppercase tracking-[0.16em]" style="background: rgb(235, 229, 218); color: rgb(110, 123, 103); font-weight: 500; font-style: normal; font-size: 16px;">Available for freelance</div>
+    </nav>
+   </header>
+   <main id="top">
+    <section class="px-5 sm:px-8 lg:px-12 pt-10 lg:pt-16 pb-14 lg:pb-20">
+     <div class="max-w-[1380px] mx-auto hero-grid grid grid-cols-[1.05fr_.95fr] gap-10 lg:gap-16 items-center">
+      <div class="reveal delay-1">
+       <p data-template-id="hero-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-6" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Art direction · Brand · Digital</p>
+       <h1 data-template-id="hero-title" class="canva-text editorial text-[clamp(3rem,7vw,7.4rem)] leading-[.94] max-w-[850px]" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 32px; line-height: 0.95;">Designing brands people can feel.</h1>
+       <div class="mt-7 flex flex-col sm:flex-row sm:items-end gap-7">
+        <p data-template-id="hero-copy" class="canva-text max-w-[500px] text-[17px] leading-7" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.65;">I partner with thoughtful founders and creative teams to shape identities, websites, and visual systems with clarity, warmth, and staying power.</p>
+        <div class="flex items-center gap-5 shrink-0"><a href="#contact" data-template-id="hero-primary-cta" class="canva-button focus-ring inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-transform hover:-translate-y-0.5" style="background: rgb(37, 35, 31); color: rgb(248, 244, 237); font-weight: 500; font-style: normal; font-size: 16px;">Start a project</a> <a href="#work" data-template-id="hero-secondary-cta" class="canva-link focus-ring inline-flex items-center gap-2 text-sm border-b border-current pb-1 transition-opacity hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">View selected work</a>
+        </div>
+       </div>
+      </div>
+      <div class="hero-visual reveal delay-2 relative min-h-[500px] sm:min-h-[620px]">
+       <div class="absolute right-0 top-8 w-[82%] h-[86%] border border-[#bdb4a6]"></div>
+       <div class="absolute left-0 bottom-0 w-[86%] h-[88%] overflow-hidden"><img data-template-id="hero-image" loading="lazy" class="canva-image w-full h-full object-cover grayscale-[8%]" src="https://images.pexels.com/photos/19513471/pexels-photo-19513471.jpeg" alt="Clean and modern workspace featuring keyboard, smartphone, and wireless mouse with minimalistic design.">
+       </div>
+       <div data-template-id="hero-note-card" class="canva-card absolute right-2 sm:right-6 bottom-8 max-w-[220px] p-5 shadow-[0_18px_45px_rgba(37,35,31,.12)]" style="background: rgb(251, 248, 242);">
+        <div class="flex items-center justify-between mb-8"><span data-template-id="hero-note-label" class="canva-text text-[10px] uppercase tracking-[0.18em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Studio note</span> <i data-lucide="asterisk" class="w-4 h-4"></i>
+        </div>
+        <p data-template-id="hero-note-copy" class="canva-text editorial text-2xl leading-tight" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Less noise. More meaning.</p>
+       </div>
+       <div class="absolute -left-4 top-10 rotate-[-90deg] origin-left"><span data-template-id="hero-side-label" class="canva-text text-[10px] uppercase tracking-[0.24em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Based in Austin · Working worldwide</span>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section class="px-5 sm:px-8 lg:px-12 py-8 border-y hairline">
+     <div class="max-w-[1380px] mx-auto grid lg:grid-cols-[1fr_2fr_1.3fr] gap-7 lg:gap-12 items-center">
+      <p data-template-id="intro-label" class="canva-text text-xs uppercase tracking-[0.18em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">A considered approach</p>
+      <p data-template-id="intro-statement" class="canva-text editorial text-[clamp(1.8rem,3vw,3.1rem)] leading-[1.05]" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Quietly distinctive work for brands with something real to say.</p>
+      <div class="grid grid-cols-3 gap-5 text-center lg:text-left">
+       <div>
+        <div data-template-id="stat-1-number" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 16px;">08</div>
+        <div data-template-id="stat-1-label" class="canva-text mt-1 text-[11px] uppercase tracking-[0.14em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Years</div>
+       </div>
+       <div>
+        <div data-template-id="stat-2-number" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 16px;">42</div>
+        <div data-template-id="stat-2-label" class="canva-text mt-1 text-[11px] uppercase tracking-[0.14em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Projects</div>
+       </div>
+       <div>
+        <div data-template-id="stat-3-number" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 16px;">12</div>
+        <div data-template-id="stat-3-label" class="canva-text mt-1 text-[11px] uppercase tracking-[0.14em]" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Partners</div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="work" class="px-5 sm:px-8 lg:px-12 py-20 lg:py-28">
+     <div class="max-w-[1380px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+       <div>
+        <p data-template-id="work-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-4" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</p>
+        <h2 data-template-id="work-title" class="canva-text editorial text-[clamp(2.8rem,5.3vw,5.6rem)] leading-[.96]" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 24px;">A few recent stories.</h2>
+       </div>
+       <p data-template-id="work-copy" class="canva-text max-w-[380px] leading-7" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.6;">Identity systems, digital homes, and launch moments shaped with equal parts strategy and instinct.</p>
+      </div>
+      <div class="work-grid grid grid-cols-[1.1fr_.9fr] gap-7">
+       <article class="project-card group">
+        <div class="overflow-hidden aspect-[1.2/1] bg-[#ddd6ca]"><img data-template-id="project-1-image" loading="lazy" class="canva-image project-image w-full h-full object-cover" src="https://images.pexels.com/photos/6672290/pexels-photo-6672290.jpeg" alt="Portable computer with website representing assorted abstract photos under favorites and browser search engine with magnifier symbol">
+        </div>
+        <div class="pt-5 flex items-start justify-between gap-4">
+         <div>
+          <p data-template-id="project-1-category" class="canva-text text-[11px] uppercase tracking-[0.18em] mb-2" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Digital identity</p>
+          <h3 data-template-id="project-1-title" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 19px;">Atelier North</h3>
+          <p data-template-id="project-1-copy" class="canva-text text-sm leading-6 mt-2 max-w-[520px]" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px;">A tactile web presence and refined visual language for an architecture practice.</p>
+         </div><i data-lucide="arrow-up-right" class="project-arrow w-5 h-5 mt-2"></i>
+        </div>
+       </article>
+       <div class="grid gap-7">
+        <article class="project-card group">
+         <div class="overflow-hidden aspect-[1.65/1] bg-[#ddd6ca]"><img data-template-id="project-2-image" loading="lazy" class="canva-image project-image w-full h-full object-cover" src="https://images.pexels.com/photos/242492/pexels-photo-242492.jpeg" alt="Close-up of a tablet displaying diverse content collections in a grid format.">
+         </div>
+         <div class="pt-5 flex items-start justify-between gap-4">
+          <div>
+           <p data-template-id="project-2-category" class="canva-text text-[11px] uppercase tracking-[0.18em] mb-2" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Product experience</p>
+           <h3 data-template-id="project-2-title" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 19px;">Kindred</h3>
+           <p data-template-id="project-2-copy" class="canva-text text-sm leading-6 mt-2 max-w-[460px]" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px;">A softer digital system for a modern wellbeing platform.</p>
+          </div><i data-lucide="arrow-up-right" class="project-arrow w-5 h-5 mt-2"></i>
+         </div>
+        </article>
+        <article class="project-card group">
+         <div class="overflow-hidden aspect-[1.65/1] bg-[#ddd6ca]"><img data-template-id="project-3-image" loading="lazy" class="canva-image project-image w-full h-full object-cover" src="https://images.pexels.com/photos/4466104/pexels-photo-4466104.jpeg" alt="From above of white mockup rectangular visiting cards arranged neatly on wooden table">
+         </div>
+         <div class="pt-5 flex items-start justify-between gap-4">
+          <div>
+           <p data-template-id="project-3-category" class="canva-text text-[11px] uppercase tracking-[0.18em] mb-2" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Brand system</p>
+           <h3 data-template-id="project-3-title" class="canva-text editorial text-3xl" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 19px;">Field &amp; Form</h3>
+           <p data-template-id="project-3-copy" class="canva-text text-sm leading-6 mt-2 max-w-[460px]" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px;">A grounded identity for a home goods studio rooted in ritual and craft.</p>
+          </div><i data-lucide="arrow-up-right" class="project-arrow w-5 h-5 mt-2"></i>
+         </div>
+        </article>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="about" class="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 border-y hairline">
+     <div class="max-w-[1380px] mx-auto about-grid grid grid-cols-[1.15fr_.85fr] gap-10 lg:gap-20">
+      <div>
+       <p data-template-id="about-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-5" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">About</p>
+       <h2 data-template-id="about-title" class="canva-text editorial text-[clamp(2.7rem,5vw,5.1rem)] leading-[1] max-w-[820px]" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 24px;">I believe the best design feels inevitable — never overworked.</h2>
+      </div>
+      <div class="lg:pt-14">
+       <p data-template-id="about-copy" class="canva-text text-[17px] leading-8" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.7;">My practice sits between strategy and expression. I help brands find the visual language that already feels like them — then bring it to life across identity, digital, and printed touchpoints.</p>
+       <div class="mt-9 grid grid-cols-2 gap-x-8 gap-y-4">
+        <div data-template-id="skill-1" class="canva-text border-t hairline pt-3 text-sm" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Brand Identity</div>
+        <div data-template-id="skill-2" class="canva-text border-t hairline pt-3 text-sm" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Creative Direction</div>
+        <div data-template-id="skill-3" class="canva-text border-t hairline pt-3 text-sm" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Web Design</div>
+        <div data-template-id="skill-4" class="canva-text border-t hairline pt-3 text-sm" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Editorial Systems</div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="contact" class="px-5 sm:px-8 lg:px-12 py-20 lg:py-28">
+     <div class="max-w-[1380px] mx-auto">
+      <p data-template-id="contact-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-6" style="color: rgb(113, 109, 100); font-weight: 600; font-style: normal; font-size: 16px;">Let’s make something lasting</p>
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
+       <h2 data-template-id="contact-title" class="canva-text editorial text-[clamp(3.4rem,8vw,8.5rem)] leading-[.92] max-w-[980px]" style="color: rgb(37, 35, 31); font-weight: 600; font-style: normal; font-size: 24px; line-height: 0.92;">Have a project in mind?</h2>
+       <div class="lg:pb-5">
+        <p data-template-id="contact-copy" class="canva-text max-w-[390px] leading-7 mb-6" style="color: rgb(95, 90, 82); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.6;">Tell me what you’re building, where you’re headed, and what you want people to feel.</p><a href="mailto:hello@maravale.studio" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-transform hover:-translate-y-0.5" style="background: rgb(37, 35, 31); color: rgb(248, 244, 237); font-weight: 500; font-style: normal; font-size: 16px;">hello@maravale.studio</a>
+       </div>
+      </div>
+      <div class="mt-16 pt-5 border-t hairline flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between text-sm">
+       <p data-template-id="footer-credit" class="canva-text" style="color: rgb(113, 109, 100); font-weight: 400; font-style: normal; font-size: 16px;">© 2026 Mara Vale Studio</p>
+       <div class="flex gap-5"><a href="#" data-template-id="footer-link-1" class="canva-link focus-ring hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Instagram</a> <a href="#" data-template-id="footer-link-2" class="canva-link focus-ring hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">Are.na</a> <a href="#" data-template-id="footer-link-3" class="canva-link focus-ring hover:opacity-60" style="color: rgb(37, 35, 31); font-weight: 500; font-style: normal; font-size: 16px;">LinkedIn</a>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main>
+  </div>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', event => {
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            event.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0c5e32a954b5e57',t:'MTc4MTU3MTcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
