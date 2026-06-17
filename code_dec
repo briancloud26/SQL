@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medieval Peasant Life</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#2e2a22;--muted:#6b6356;--paper:#f3ede3;--line:#d4cab8;--accent:#8b6b3e;--cream:#faf6ef}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Alegreya',serif;color:var(--ink);background:var(--paper)}
+    .page-shell{width:100%;min-height:100%}
+    .editorial{font-family:'Fraunces',serif;letter-spacing:-0.03em}
+    .hairline{border-color:var(--line)}
+    .reveal{opacity:0;transform:translateY(18px);animation:riseIn .8s ease forwards}
+    .delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.35s}
+    @keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+    @media(max-width:900px){.two-col{grid-template-columns:1fr!important}}
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(243, 237, 227);">
+  <div class="page-shell w-full">
+   <header class="w-full px-5 sm:px-8 lg:px-12 py-5 border-b hairline">
+    <nav class="max-w-[1280px] mx-auto flex items-center justify-between" aria-label="Primary navigation">
+     <h2 data-template-id="brand-name" class="canva-text editorial text-xl font-semibold" style="color: rgb(46, 42, 34); font-weight: 600; font-style: normal; font-size: 26px;">Medieval Peasant Life</h2>
+     <div class="flex items-center gap-6 text-sm"><a href="#daily-life" data-template-id="nav-daily" class="canva-link hover:opacity-60" style="color: rgb(46, 42, 34); font-weight: 400; font-style: normal; font-size: 17px;">Daily Life</a> <a href="#village" data-template-id="nav-village" class="canva-link hover:opacity-60" style="color: rgb(46, 42, 34); font-weight: 400; font-style: normal; font-size: 17px;">The Village</a> <a href="#harvest" data-template-id="nav-harvest" class="canva-link hover:opacity-60" style="color: rgb(46, 42, 34); font-weight: 400; font-style: normal; font-size: 17px;">The Harvest</a>
+     </div>
+    </nav>
+   </header>
+   <main><!-- Hero -->
+    <section class="px-5 sm:px-8 lg:px-12 pt-12 lg:pt-20 pb-16">
+     <div class="max-w-[1280px] mx-auto two-col grid grid-cols-[1.1fr_.9fr] gap-12 items-center">
+      <div class="reveal delay-1">
+       <p data-template-id="hero-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-5" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Life in the Middle Ages</p>
+       <h1 data-template-id="hero-title" class="canva-text editorial text-[clamp(2.8rem,6vw,5.5rem)] leading-[.95]" style="color: rgb(46, 42, 34); font-weight: 600; font-style: normal; font-size: 34px;">The world of the medieval peasant.</h1>
+       <p data-template-id="hero-copy" class="canva-text mt-6 text-lg leading-8 max-w-[520px]" style="color: rgb(90, 83, 71); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">For nearly a thousand years, peasants formed the backbone of European society — tilling fields, raising livestock, and sustaining kingdoms from the ground up.</p>
+      </div>
+      <div class="reveal delay-2 overflow-hidden rounded-sm"><img data-template-id="hero-image" loading="lazy" class="canva-image w-full h-[420px] object-cover" src="https://images.pexels.com/photos/27726410/pexels-photo-27726410.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Lush golden wheat field with a clear blue sky">
+      </div>
+     </div>
+    </section><!-- Stats -->
+    <section class="px-5 sm:px-8 lg:px-12 py-8 border-y hairline">
+     <div class="max-w-[1280px] mx-auto grid grid-cols-3 gap-6 text-center">
+      <div>
+       <div data-template-id="stat-1-number" class="canva-text editorial text-3xl" style="color: rgb(46, 42, 34); font-weight: 600; font-style: normal; font-size: 17px;">90%</div>
+       <div data-template-id="stat-1-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Of population</div>
+      </div>
+      <div>
+       <div data-template-id="stat-2-number" class="canva-text editorial text-3xl" style="color: rgb(46, 42, 34); font-weight: 600; font-style: normal; font-size: 17px;">14hr</div>
+       <div data-template-id="stat-2-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Work days</div>
+      </div>
+      <div>
+       <div data-template-id="stat-3-number" class="canva-text editorial text-3xl" style="color: rgb(46, 42, 34); font-weight: 600; font-style: normal; font-size: 17px;">3</div>
+       <div data-template-id="stat-3-label" class="canva-text mt-1 text-xs uppercase tracking-[0.14em]" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Field system</div>
+      </div>
+     </div>
+    </section><!-- Daily Life -->
+    <section id="daily-life" class="px-5 sm:px-8 lg:px-12 py-20">
+     <div class="max-w-[1280px] mx-auto two-col grid grid-cols-[.9fr_1.1fr] gap-12 items-center">
+      <div class="overflow-hidden rounded-sm"><img data-template-id="daily-life-image" loading="lazy" class="canva-image w-full h-[380px] object-cover" src="https://images.pexels.com/photos/36540592/pexels-photo-36540592.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="A cozy rustic shed with vintage farm tools and a straw hat">
+      </div>
+      <div>
+       <p data-template-id="daily-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-4" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Dawn to dusk</p>
+       <h2 data-template-id="daily-title" class="canva-text editorial text-[clamp(2rem,4vw,3.4rem)] leading-[1]" style="color: rgb(46, 42, 34); font-weight: 500; font-style: normal; font-size: 26px;">A life governed by the seasons.</h2>
+       <p data-template-id="daily-copy" class="canva-text mt-5 text-lg leading-8 max-w-[500px]" style="color: rgb(90, 83, 71); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">Peasants rose before dawn to tend crops, feed animals, and repair tools. Their days were shaped by sunlight, weather, and the liturgical calendar that granted rare days of rest.</p>
+      </div>
+     </div>
+    </section><!-- Village -->
+    <section id="village" class="px-5 sm:px-8 lg:px-12 py-20 border-y hairline">
+     <div class="max-w-[1280px] mx-auto two-col grid grid-cols-[1.1fr_.9fr] gap-12 items-center">
+      <div>
+       <p data-template-id="village-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-4" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">Community &amp; structure</p>
+       <h2 data-template-id="village-title" class="canva-text editorial text-[clamp(2rem,4vw,3.4rem)] leading-[1]" style="color: rgb(46, 42, 34); font-weight: 500; font-style: normal; font-size: 26px;">Bound together by land and lord.</h2>
+       <p data-template-id="village-copy" class="canva-text mt-5 text-lg leading-8 max-w-[500px]" style="color: rgb(90, 83, 71); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">Villages clustered around a manor house and church. Peasants held strips of land in open fields and shared common pastures, with obligations of labor and rent owed to their feudal lord.</p>
+      </div>
+      <div class="overflow-hidden rounded-sm"><img data-template-id="village-image" loading="lazy" class="canva-image w-full h-[380px] object-cover" src="https://images.pexels.com/photos/18381494/pexels-photo-18381494.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Idyllic street of traditional Cotswold stone cottages with lush greenery">
+      </div>
+     </div>
+    </section><!-- Harvest -->
+    <section id="harvest" class="px-5 sm:px-8 lg:px-12 py-20">
+     <div class="max-w-[1280px] mx-auto two-col grid grid-cols-[.9fr_1.1fr] gap-12 items-center">
+      <div class="overflow-hidden rounded-sm"><img data-template-id="harvest-image" loading="lazy" class="canva-image w-full h-[380px] object-cover" src="https://images.pexels.com/photos/11987205/pexels-photo-11987205.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="A serene scene of a wheat field at sunset with golden hues">
+      </div>
+      <div>
+       <p data-template-id="harvest-eyebrow" class="canva-text text-xs uppercase tracking-[0.2em] mb-4" style="color: rgb(107, 99, 86); font-weight: 600; font-style: normal; font-size: 17px;">The crucial months</p>
+       <h2 data-template-id="harvest-title" class="canva-text editorial text-[clamp(2rem,4vw,3.4rem)] leading-[1]" style="color: rgb(46, 42, 34); font-weight: 500; font-style: normal; font-size: 26px;">Harvest — survival or famine.</h2>
+       <p data-template-id="harvest-copy" class="canva-text mt-5 text-lg leading-8 max-w-[500px]" style="color: rgb(90, 83, 71); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">Late summer brought the most critical weeks of the year. Every able body joined to reap, bind, and thresh grain before autumn rains. A failed harvest meant hunger, debt, and death.</p>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer class="px-5 sm:px-8 lg:px-12 py-8 border-t hairline">
+     <div class="max-w-[1280px] mx-auto text-center">
+      <p data-template-id="footer-credit" class="canva-text text-sm" style="color: rgb(107, 99, 86); font-weight: 400; font-style: normal; font-size: 17px;">© 2026 Medieval Peasant Life — An Educational Resource</p>
+     </div>
+    </footer>
+   </main>
+  </div>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+          const t = document.querySelector(link.getAttribute('href'));
+          if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+        });
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d5d8bdb179b5f3',t:'MTc4MTczOTA3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
