@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASO Keyword Planner</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .score-bar { height: 6px; border-radius: 3px; transition: width 0.3s; }
+    </style>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen">
+  <header class="relative overflow-hidden"><img data-template-id="hero-img" class="canva-image absolute inset-0 w-full h-full object-cover opacity-20" loading="lazy">
+   <div class="relative p-8 md:p-12">
+    <h1 data-template-id="page-title" class="canva-text font-bold"></h1>
+    <p data-template-id="page-subtitle" class="canva-text mt-2"></p>
+   </div>
+  </header>
+  <main class="max-w-5xl mx-auto p-6"><!-- Add Form -->
+   <form id="add-form" data-template-id="form-section" class="canva-card rounded-xl p-5 mb-6">
+    <h2 data-template-id="form-title" class="canva-text font-semibold mb-4"></h2>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+     <div class="md:col-span-3"><label data-template-id="label-keyword" class="canva-text text-sm block mb-1" for="kw-input"></label> <input id="kw-input" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+     </div>
+     <div class="md:col-span-2"><label data-template-id="label-relevance" class="canva-text text-sm block mb-1" for="rel-input"></label> <input id="rel-input" type="number" min="1" max="10" value="5" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+     </div>
+     <div class="md:col-span-2"><label data-template-id="label-difficulty" class="canva-text text-sm block mb-1" for="diff-input"></label> <input id="diff-input" type="number" min="1" max="10" value="5" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+     </div>
+     <div class="md:col-span-3"><label data-template-id="label-notes" class="canva-text text-sm block mb-1" for="notes-input"></label> <input id="notes-input" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+     </div>
+     <div class="md:col-span-2"><button data-template-id="add-btn" type="submit" class="canva-button w-full rounded-lg px-4 py-2 text-sm font-semibold"></button>
+     </div>
+    </div>
+   </form><!-- Keywords Table -->
+   <div id="keyword-list" class="space-y-3"></div>
+   <p id="empty-state" data-template-id="empty-msg" class="canva-text text-center py-12 hidden"></p>
+   <p id="limit-warning" class="text-red-600 text-center py-4 font-semibold hidden">Maximum 999 keywords reached. Please delete some to add more.</p>
+  </main>
+  <template id="kw-template">
+   <div data-template-id="kw-card" class="canva-card rounded-lg p-4 flex flex-col md:flex-row md:items-center gap-3">
+    <div class="flex-1 min-w-0"><span data-template-id="kw-name" class="canva-text font-semibold text-base"></span> <span data-template-id="kw-notes-display" class="canva-text text-sm ml-2 opacity-70"></span>
+    </div>
+    <div class="flex items-center gap-4 flex-wrap">
+     <div class="w-28">
+      <div class="text-xs opacity-60 mb-1">
+       Relevance
+      </div>
+      <div class="bg-gray-200 rounded-full overflow-hidden">
+       <div class="score-bar bg-emerald-500" data-role="rel-bar"></div>
+      </div>
+     </div>
+     <div class="w-28">
+      <div class="text-xs opacity-60 mb-1">
+       Difficulty
+      </div>
+      <div class="bg-gray-200 rounded-full overflow-hidden">
+       <div class="score-bar bg-amber-500" data-role="diff-bar"></div>
+      </div>
+     </div><select data-role="status-select" class="text-xs border rounded-md px-2 py-1 bg-white"> <option value="researching">Researching</option> <option value="targeting">Targeting</option> <option value="ranked">Ranked</option> <option value="dismissed">Dismissed</option> </select> <button data-role="delete-btn" type="button" class="text-red-400 hover:text-red-600 p-1" aria-label="Delete keyword"> <i data-lucide="trash-2" style="width:16px;height:16px;"></i> </button>
+    </div>
+   </div>
+  </template>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script>
+        let allData = [];
+        const list = document.getElementById('keyword-list');
+        const emptyState = document.getElementById('empty-state');
+        const limitWarning = document.getElementById('limit-warning');
+        const form = document.getElementById('add-form');
+
+        const handler = {
+            onDataChanged(data) {
+                allData = data;
+                renderList(data);
+            }
+        };
+
+        function renderList(data) {
+            const sorted = [...data].sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
+            const existingMap = new Map([...list.children].map(el => [el.dataset.id, el]));
+            const seen = new Set();
+
+            sorted.forEach((item, i) => {
+                seen.add(item.__backendId);
+                let el = existingMap.get(item.__backendId);
+                if (!el) {
+                    const tpl = document.getElementById('kw-template');
+                    const clone = tpl.content.cloneNode(true);
+                    el = clone.firstElementChild;
+                    el.dataset.id = item.__backendId;
+                    list.appendChild(el);
+                    lucide.createIcons();
+                }
+                el.querySelector('[data-template-id="kw-name"]').textContent = item.keyword || '';
+                el.querySelector('[data-template-id="kw-notes-display"]').textContent = item.notes ? `— ${item.notes}` : '';
+                el.querySelector('[data-role="rel-bar"]').style.width = `${(item.relevance || 0) * 10}%`;
+                el.querySelector('[data-role="diff-bar"]').style.width = `${(item.difficulty || 0) * 10}%`;
+                const sel = el.querySelector('[data-role="status-select"]');
+                if (sel.value !== item.status) sel.value = item.status || 'researching';
+
+                sel.onchange = () => updateStatus(item, sel.value);
+                el.querySelector('[data-role="delete-btn"]').onclick = () => deleteItem(item);
+
+                if (el !== list.children[i]) list.insertBefore(el, list.children[i]);
+            });
+
+            existingMap.forEach((el, id) => { if (!seen.has(id)) el.remove(); });
+            emptyState.classList.toggle('hidden', data.length > 0);
+        }
+
+        async function updateStatus(item, newStatus) {
+            const result = await window.dataSdk.update({ ...item, status: newStatus });
+            if (result.isError) showToast('Failed to update status');
+        }
+
+        async function deleteItem(item) {
+            const result = await window.dataSdk.delete(item);
+            if (result.isError) showToast('Failed to delete');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (allData.length >= 999) { limitWarning.classList.remove('hidden'); return; }
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true; btn.textContent = '...';
+            const result = await window.dataSdk.create({
+                keyword: document.getElementById('kw-input').value.trim(),
+                relevance: parseInt(document.getElementById('rel-input').value) || 5,
+                difficulty: parseInt(document.getElementById('diff-input').value) || 5,
+                status: 'researching',
+                notes: document.getElementById('notes-input').value.trim(),
+                created_at: new Date().toISOString()
+            });
+            btn.disabled = false; btn.textContent = 'Add Keyword';
+            if (result.isOk) { form.reset(); document.getElementById('rel-input').value = '5'; document.getElementById('diff-input').value = '5'; }
+            else showToast('Failed to add keyword');
+        });
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm z-50';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        (async () => {
+            const r = await window.dataSdk.init(handler);
+            if (r.isError) showToast('Failed to connect to data');
+            lucide.createIcons();
+        })();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f05624c631f0b0',t:'MTc4MjAxNjg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
