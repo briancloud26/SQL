@@ -1,0 +1,171 @@
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Cpu,
+  Battery,
+  HardDrive,
+  Monitor,
+  Wifi,
+  Globe,
+  Clock,
+  Fingerprint,
+  Activity,
+  Gauge,
+  Palette,
+  Puzzle,
+} from "lucide-react";
+import SystemInfoCard from "@/components/SystemInfoCard";
+import SpecItem from "@/components/SpecItem";
+import BatteryMeter from "@/components/BatteryMeter";
+import StorageMeter from "@/components/StorageMeter";
+import { useSystemInfo, formatSeconds } from "@/hooks/useSystemInfo";
+
+export default function Home() {
+  const i = useSystemInfo();
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <header className="max-w-5xl mx-auto px-5 sm:px-8 pt-14 pb-10">
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Live · read-only
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight leading-[1.05]">
+            System <span className="text-muted-foreground">Information</span>
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground max-w-md">
+            A snapshot of this device and browser environment, read from standard web APIs.
+            Nothing is stored or modified.
+          </p>
+        </motion.div>
+      </header>
+
+      {/* Grid */}
+      <main className="max-w-5xl mx-auto px-5 sm:px-8 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+          <SystemInfoCard icon={Fingerprint} title="Environment" delay={0.05}>
+            <SpecItem label="Operating system" value={i.os} />
+            <SpecItem label="Platform" value={i.platform} />
+            <SpecItem label="Browser" value={`${i.browser} ${i.browserVersion}`} />
+            <SpecItem label="Language" value={i.language} hint={i.languages} />
+            <SpecItem label="Online" value={i.online ? "Yes" : "No"} />
+            <SpecItem label="Cookies enabled" value={i.cookieEnabled ? "Yes" : "No"} />
+            <SpecItem label="Do Not Track" value={i.doNotTrack ? "Enabled" : "Off"} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Cpu} title="Hardware" delay={0.1}>
+            <SpecItem label="CPU threads" value={i.hardwareConcurrency ?? "—"} hint="navigator.hardwareConcurrency" />
+            <SpecItem label="Device memory" value={i.deviceMemory ?? "—"} hint="navigator.deviceMemory (approx.)" />
+            <SpecItem label="Touch input" value={i.touch ? "Yes" : "No"} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Battery} title="Battery" delay={0.15}>
+            {i.batteryLevel != null ? (
+              <>
+                <BatteryMeter level={i.batteryLevel} charging={i.batteryCharging} />
+                <SpecItem label="Charging" value={i.batteryCharging ? "Yes" : "No"} />
+                <SpecItem label="Time to full" value={i.batteryCharging ? formatSeconds(i.batteryChargingTime) : "—"} />
+                <SpecItem label="Time remaining" value={!i.batteryCharging ? formatSeconds(i.batteryDischargingTime) : "—"} />
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground italic py-2">
+                Battery API not available on this browser.
+              </p>
+            )}
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={HardDrive} title="Storage" delay={0.2}>
+            <StorageMeter usage={i.storageUsage} quota={i.storageQuota} />
+            <SpecItem label="Used" value={i.storageUsage != null ? `${(i.storageUsage / 1e9).toFixed(2)} GB` : "—"} />
+            <SpecItem label="Quota" value={i.storageQuota != null ? `${(i.storageQuota / 1e9).toFixed(2)} GB` : "—"} />
+            <p className="text-[11px] text-muted-foreground/70 pt-1">
+              Storage estimate for this origin only; not total device disk.
+            </p>
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Monitor} title="Display" delay={0.25}>
+            <SpecItem label="Screen" value={`${i.screenWidth} × ${i.screenHeight}`} />
+            <SpecItem label="Viewport" value={`${i.viewportW} × ${i.viewportH}`} hint="live" />
+            <SpecItem label="Color depth" value={i.screenDepth ? `${i.screenDepth}-bit` : "—"} />
+            <SpecItem label="Pixel ratio" value={i.pixelRatio ? `${i.pixelRatio}×` : "—"} />
+            <SpecItem label="Orientation" value={i.orientation} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Wifi} title="Network" delay={0.3}>
+            <SpecItem label="Connection type" value={i.connectionType} />
+            <SpecItem label="Downlink" value={i.downlink} />
+            <SpecItem label="Latency (RTT)" value={i.rtt} />
+            <SpecItem label="Data saver" value={i.saveData ? "On" : "Off"} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Clock} title="Time & Location" delay={0.35}>
+            <SpecItem label="Timezone" value={i.timezone} />
+            <SpecItem label="Local time" value={new Date().toLocaleString()} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Globe} title="User Agent" delay={0.4}>
+            <p className="font-mono text-[11px] leading-relaxed text-muted-foreground break-words">
+              {navigator.userAgent}
+            </p>
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Gauge} title="Graphics · GPU" delay={0.45}>
+            <SpecItem label="Vendor" value={i.gpuVendor || "—"} />
+            <SpecItem label="Renderer" value={i.gpuRenderer || "—"} hint={i.webglVersion} />
+            <SpecItem label="Max texture size" value={i.maxTextureSize ? `${i.maxTextureSize}px` : "—"} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Palette} title="Preferences" delay={0.5}>
+            <SpecItem label="Color scheme" value={i.prefersDark == null ? "—" : i.prefersDark ? "Dark" : "Light"} />
+            <SpecItem label="Reduced motion" value={i.reducedMotion == null ? "—" : i.reducedMotion ? "Yes" : "No"} />
+            <SpecItem label="High contrast" value={i.prefersContrast == null ? "—" : i.prefersContrast ? "Yes" : "No"} />
+            <SpecItem label="HDR display" value={i.hdr == null ? "—" : i.hdr ? "Supported" : "No"} />
+            <SpecItem label="Color gamut" value={i.colorGamut} />
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Cpu} title="Memory (JS heap)" delay={0.55}>
+            {i.jsHeapUsed != null ? (
+              <>
+                <SpecItem label="Used" value={`${(i.jsHeapUsed / 1e6).toFixed(1)} MB`} />
+                <SpecItem label="Allocated" value={`${(i.jsHeapTotal / 1e6).toFixed(1)} MB`} />
+                <SpecItem label="Heap limit" value={`${(i.jsHeapLimit / 1e6).toFixed(0)} MB`} />
+                <p className="text-[11px] text-muted-foreground/70 pt-1">
+                  V8 memory — only available in Chromium-based browsers.
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground italic py-2">
+                performance.memory not available in this browser.
+              </p>
+            )}
+          </SystemInfoCard>
+
+          <SystemInfoCard icon={Puzzle} title="Capabilities" delay={0.6}>
+            <SpecItem label="Max touch points" value={i.maxTouchPoints} />
+            <SpecItem label="Vibration" value={i.vibration ? "Supported" : "No"} />
+            <SpecItem label="Service Worker" value={i.serviceWorker ? "Supported" : "No"} />
+            <SpecItem label="Wake Lock" value={i.wakeLock ? "Supported" : "No"} />
+            <SpecItem label="Clipboard API" value={i.clipboard ? "Supported" : "No"} />
+            <SpecItem label="Geolocation" value={i.geolocation ? "Supported" : "No"} />
+            <SpecItem label="Notifications" value={typeof Notification !== "undefined" ? i.notification : "unsupported"} />
+            <SpecItem label="Speech voices" value={i.speechSynthesis || "—"} />
+            <SpecItem label="PDF viewer" value={i.pdfViewer ? "Yes" : "No"} />
+            <SpecItem label="Automation" value={i.webdriver ? "Detected" : "No"} />
+            <SpecItem label="Vendor" value={i.vendor} />
+          </SystemInfoCard>
+        </div>
+
+        <footer className="mt-12 flex items-center justify-center gap-2 text-xs text-muted-foreground/60">
+          <Activity className="h-3 w-3" />
+          Read-only · updates live · no data leaves your device
+        </footer>
+      </main>
+    </div>
+  );
+}
