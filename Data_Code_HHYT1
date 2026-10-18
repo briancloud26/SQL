@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a6f97">
+<title>Your Brand – Mobile Template</title>
+<meta name="description" content="A mobile-first, app-style website template.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. DESIGN TOKENS – edit these to re-theme ===== */
+:root {
+  --bg: #eef2f5;
+  --surface: #ffffff;
+  --ink: #14213d;
+  --muted: #55627a;
+  --accent: #2a6f97;
+  --accent-ink: #ffffff;
+  --highlight: #f2c14e;
+  --line: #d3dce5;
+  --radius: 16px;
+  --tap: 52px; /* minimum touch target height */
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --top: 56px;
+  --bottom: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1626; --surface: #16213a; --ink: #eaf0f7; --muted: #9fb0c8;
+    --accent: #6cb4e0; --accent-ink: #0e1626; --line: #26344f;
+  }
+}
+
+/* ===== 2. BASE (mobile first) ===== */
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--top) + env(safe-area-inset-top, 0px) + 8px); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(var(--bottom) + env(safe-area-inset-bottom, 0px) + 12px);
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0 0 .5em; letter-spacing: -0.02em; }
+h1 { font-size: 2.4rem; font-weight: 800; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+p { margin: 0 0 1em; }
+.muted { color: var(--muted); }
+
+/* App shell: on a larger screen, keep the layout phone-width and centered */
+.app { max-width: 480px; margin-inline: auto; min-height: 100vh; background: var(--bg); }
+@media (min-width: 520px) { body { background: color-mix(in srgb, var(--ink) 12%, var(--bg)); } .app { box-shadow: 0 0 0 1px var(--line); } }
+section { padding: 2rem 1.25rem; }
+
+.btn {
+  display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: var(--tap); padding: 0 1.25rem; border-radius: var(--radius);
+  font: 500 1.05rem var(--font-body); text-decoration: none; border: 2px solid var(--ink);
+  background: transparent; color: var(--ink); cursor: pointer;
+}
+.btn:active { transform: scale(.98); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn + .btn { margin-top: .75rem; }
+
+/* ===== 3. TOP BAR (sticky) ===== */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  height: calc(var(--top) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) 1.25rem 0;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.logo { font: 800 1.3rem var(--font-display); text-decoration: none; letter-spacing: -0.03em; }
+.topbar .call {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink); text-decoration: none; font-size: 1.2rem;
+}
+
+/* ===== 4. HERO ===== */
+.hero { padding-top: 2.25rem; }
+.hero p { font-size: 1.1rem; color: var(--muted); margin-bottom: 1.5rem; }
+.palette {
+  margin-top: 2rem; background: var(--surface); border: 2px solid var(--ink);
+  border-radius: var(--radius); padding: 1rem; box-shadow: 6px 6px 0 var(--highlight);
+}
+.palette h3 { font-size: .95rem; margin-bottom: .8rem; }
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+.swatch { border-radius: 10px; padding: 1.6rem .4rem .4rem; font-size: .68rem; border: 1px solid var(--line); word-break: break-all; }
+.swatch:nth-child(1) { background: var(--accent); color: var(--accent-ink); }
+.swatch:nth-child(2) { background: var(--highlight); color: #14213d; }
+.swatch:nth-child(3) { background: var(--ink); color: var(--bg); }
+.swatch:nth-child(4) { background: var(--bg); }
+
+/* ===== 5. SERVICES (tappable rows) ===== */
+.services { background: var(--surface); border-block: 1px solid var(--line); }
+.row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  min-height: 72px; padding: .9rem 0; border-top: 1px solid var(--line);
+}
+.row:last-child { border-bottom: 1px solid var(--line); }
+.row p { margin: 0; font-size: .95rem; color: var(--muted); }
+.row .chev { font-size: 1.4rem; color: var(--muted); flex: none; }
+
+/* ===== 6. ABOUT ===== */
+.image-slot {
+  aspect-ratio: 4 / 3; border-radius: var(--radius); border: 2px dashed var(--line);
+  display: grid; place-items: center; text-align: center; padding: 1rem; margin-bottom: 1.25rem;
+  color: var(--muted); font-size: .95rem;
+  background: repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in srgb, var(--line) 45%, transparent) 14px 15px);
+}
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-top: 1.25rem; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .9rem .5rem; text-align: center; }
+.stat strong { display: block; font: 800 1.5rem var(--font-display); }
+.stat span { font-size: .78rem; color: var(--muted); line-height: 1.2; display: block; }
+
+/* ===== 7. CONTACT ===== */
+.contact { background: var(--ink); color: var(--bg); }
+.contact .muted { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+.field { display: grid; gap: .35rem; margin-bottom: 1rem; }
+label { font-weight: 500; font-size: .95rem; }
+input, textarea {
+  font: inherit; font-size: 16px; /* 16px stops iOS from zooming on focus */
+  min-height: var(--tap); padding: .8rem 1rem; width: 100%;
+  border-radius: 12px; border: 2px solid transparent; background: var(--bg); color: #14213d;
+}
+textarea { min-height: 8rem; resize: vertical; }
+@media (prefers-color-scheme: dark) { input, textarea { background: var(--surface); color: var(--ink); } .contact { background: #070d19; } }
+input:focus-visible, textarea:focus-visible { outline-color: var(--highlight); }
+.contact .btn-primary { background: var(--highlight); border-color: var(--highlight); color: #14213d; }
+
+footer { padding: 1.5rem 1.25rem; color: var(--muted); font-size: .9rem; text-align: center; }
+
+/* ===== 8. BOTTOM TAB BAR (fixed, thumb reach) ===== */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  display: flex; justify-content: center;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.tabbar ul { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; max-width: 480px; margin: 0; padding: 0; list-style: none; }
+.tabbar a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  height: var(--bottom); text-decoration: none; color: var(--muted); font-size: .72rem; font-weight: 500;
+}
+.tabbar a span { font-size: 1.3rem; line-height: 1; }
+.tabbar a:active, .tabbar a:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn:active { transform: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a class="logo" href="#top">Your Brand</a>
+    <a class="call" href="tel:+15550100199" aria-label="Call us">&#9990;</a>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Say what you do, clearly.</h1>
+      <p>Replace this with one plain sentence about who you help and how.</p>
+      <a class="btn btn-primary" href="#contact">Get in touch</a>
+      <a class="btn" href="#services">See what we offer</a>
+
+      <aside class="palette" aria-label="Theme colors">
+        <h3>Your theme lives in :root</h3>
+        <div class="swatches">
+          <div class="swatch">accent</div>
+          <div class="swatch">highlight</div>
+          <div class="swatch">ink</div>
+          <div class="swatch">bg</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+      <h2>What we offer</h2>
+      <a class="row" href="#contact" style="text-decoration:none">
+        <div><h3>Service one</h3><p>What the customer gets, in one line.</p></div>
+        <span class="chev" aria-hidden="true">&rsaquo;</span>
+      </a>
+      <a class="row" href="#contact" style="text-decoration:none">
+        <div><h3>Service two</h3><p>How long it takes or what it costs.</p></div>
+        <span class="chev" aria-hidden="true">&rsaquo;</span>
+      </a>
+      <a class="row" href="#contact" style="text-decoration:none">
+        <div><h3>Service three</h3><p>A guarantee or a quick turnaround.</p></div>
+        <span class="chev" aria-hidden="true">&rsaquo;</span>
+      </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="image-slot" role="img" aria-label="Image placeholder">Replace with your photo</div>
+      <h2>About us</h2>
+      <p>Tell your story in a short paragraph. Who you are, why you started, and what you care about.</p>
+      <div class="stats">
+        <div class="stat"><strong>10+</strong><span>Years</span></div>
+        <div class="stat"><strong>250</strong><span>Projects</span></div>
+        <div class="stat"><strong>4.9</strong><span>Rating</span></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <h2>Let’s talk</h2>
+      <p class="muted">We’ll reply within one business day.</p>
+      <!-- Point action at your form service (Formspree, Netlify Forms, your backend, etc.) -->
+      <form action="#" method="post">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>© 2026 Your Brand. All rights reserved.</footer>
+</div>
+
+<!-- BOTTOM TAB BAR -->
+<nav class="tabbar" aria-label="Main">
+  <ul>
+    <li><a href="#top"><span aria-hidden="true">&#8962;</span>Home</a></li>
+    <li><a href="#services"><span aria-hidden="true">&#9776;</span>Services</a></li>
+    <li><a href="#about"><span aria-hidden="true">&#9786;</span>About</a></li>
+    <li><a href="#contact"><span aria-hidden="true">&#9993;</span>Contact</a></li>
+  </ul>
+</nav>
+
+</body>
+</html>
